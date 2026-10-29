@@ -8,6 +8,8 @@ import Collection from './pages/Collection'
 import Product from './pages/Product'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 
 export default function App() {
   return (
@@ -19,6 +21,8 @@ export default function App() {
         <Route path="/products/:slug" element={<Product />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<Collection />} />
       </Routes>
       <Footer />

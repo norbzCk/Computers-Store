@@ -1,6 +1,6 @@
 // Edit this file to change store details, categories and products.
 export const site = {
-  name: 'Billionaires Computers',
+  name: "Billionaire's Computers",
   phone: '+255 774458938',
   email: 'info@billionaires.co.tz',
   hours: ['Monday - Friday 9am to 5pm', 'Saturday 10am to 2pm'],

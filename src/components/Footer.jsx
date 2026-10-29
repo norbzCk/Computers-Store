@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { site } from '../data'
-import logo from '../assets/Billionaire\'s computers logo.png'
+import Logo from './Logo'
 
 export default function Footer() {
   return (
@@ -11,13 +11,7 @@ export default function Footer() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 lg:gap-12 py-8 sm:py-10">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <img src={logo} alt="Billionaires Computers" className="h-10 w-auto" />
-              <div className="leading-tight">
-                <div className="font-bold text-[16px] text-ink">Billionaires</div>
-                <div className="font-bold text-[18px] text-brand -mt-0.5">Computers</div>
-              </div>
-            </div>
+            <Logo size="sm" className="mb-3" />
             <h4 className="text-brand uppercase text-sm mb-2">About {site.name}</h4>
             <p className="text-sm">{site.name} sells computers and accessories in {site.address}. Call us on {site.phone} for more info.</p>
           </div>

@@ -1,4 +1,4 @@
-# Billionaires Computers storefront (React + Vite)
+# Billionaire's Computers storefront (React + Vite)
 
     npm install
     npm run dev

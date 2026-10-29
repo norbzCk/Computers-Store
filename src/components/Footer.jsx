@@ -1,0 +1,20 @@
+import { Link } from 'react-router-dom'
+import { site } from '../data'
+
+export default function Footer() {
+  return (
+    <footer className="bg-[#f7f8f9] pb-8">
+      <div className="max-w-[1420px] mx-auto px-4 sm:px-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6 py-8 sm:py-10 border-b border-[#dde2e5]">
+          {[['Free delivery in Dar es Salaam', 'Available to selected areas'], ['Hassle free shopping', 'Get the best deals guaranteed'], ['Top-notch support', 'Get in touch to discuss your requirements'], ['Secure payments', 'Mobile money or cash on delivery']].map(([a, b]) => <div key={a}><b className="text-brand block">{a}</b><span className="text-sm">{b}</span></div>)}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-[60px] py-8 sm:py-10">
+          <div><h4 className="text-brand uppercase text-sm mb-2.5">About {site.name}</h4><p className="text-sm">{site.name} sells computers and accessories in {site.address}. Call us on {site.phone} for more info.</p></div>
+          <div><h4 className="text-brand uppercase text-sm mb-2.5">Quick links</h4><div className="flex flex-col gap-1"><Link to="/collections/all" className="hover:text-brand">Search</Link><Link to="/contact" className="hover:text-brand">Contact Us</Link><Link to="/about" className="hover:text-brand">About</Link></div></div>
+          <div><h4 className="text-brand uppercase text-sm mb-2.5">Get deals and discounts</h4><p className="text-sm mb-3">Sign up with your email address to get monthly deals</p><input placeholder="Your email" className="p-3 w-full border border-line mb-2.5" /><button className="inline-block bg-brand text-white px-6 py-3 font-semibold hover:bg-brand-dark">Subscribe</button></div>
+        </div>
+        <div className="text-sm">© {site.name}</div>
+      </div>
+    </footer>
+  )
+}

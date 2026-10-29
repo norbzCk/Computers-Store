@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #d6185b;
+  --color-brand-dark: #b01249;
+  --color-ink: #46535b;
+  --color-text: #677279;
+  --color-bg: #f3f5f6;
+  --color-line: #e4e8ea;
+  --color-green: #0a8a0a;
+  --color-top: #5b5b5b;
+  --font-sans: Barlow, system-ui, sans-serif;
+}
+
+html {
+  @apply w-full;
+}
+
+body {
+  @apply bg-bg text-text font-sans text-base leading-relaxed w-full min-h-screen;
+}
+
+#root {
+  @apply w-full;
+}
+
+a {
+  @apply text-inherit no-underline;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}

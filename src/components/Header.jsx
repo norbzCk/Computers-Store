@@ -24,7 +24,13 @@ export default function Header() {
       <div className="sticky top-0 z-20">
         <div className="bg-white border-b border-line">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap lg:flex-nowrap items-center gap-4 lg:gap-8 xl:gap-10 py-3 sm:py-[14px]">
-            <Link to="/" className="font-bold leading-none text-[22px] sm:text-[26px] text-ink">Billionaires<b className="block text-brand text-[26px] sm:text-[30px]">Computers</b></Link>
+            <Link to="/" className="flex items-center gap-2">
+              <img src={logo} alt="Billionaires Computers" className="h-10 sm:h-12 lg:h-14 w-auto" />
+              <div className="leading-tight">
+                <div className="font-bold text-[18px] sm:text-[22px] lg:text-[24px] text-ink">Billionaires</div>
+                <div className="font-bold text-[20px] sm:text-[24px] lg:text-[26px] text-brand -mt-1">Computers</div>
+              </div>
+            </Link>
             <form className="flex-1 w-full lg:w-auto order-3 lg:order-none flex bg-white border border-line" onSubmit={go}>
               <input placeholder="Search..." value={q} onChange={(e) => setQ(e.target.value)} className="flex-1 border-0 px-3 sm:px-[14px] py-2.5 sm:py-3 outline-0 min-w-0" />
               <select value={cat} onChange={(e) => setCat(e.target.value)} className="border-0 border-l border-line px-2 sm:px-[10px] bg-white text-text"><option value="all">All categories</option>{cats.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}</select>

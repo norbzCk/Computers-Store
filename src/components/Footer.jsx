@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { site } from '../data'
+import logo from '../assets/Billionaire\'s computers logo.png'
 
 export default function Footer() {
   return (
@@ -9,7 +10,17 @@ export default function Footer() {
           {[['Free delivery in Dar es Salaam', 'Available to selected areas'], ['Hassle free shopping', 'Get the best deals guaranteed'], ['Top-notch support', 'Get in touch to discuss your requirements'], ['Secure payments', 'Mobile money or cash on delivery']].map(([a, b]) => <div key={a}><b className="text-brand block">{a}</b><span className="text-sm">{b}</span></div>)}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 lg:gap-12 py-8 sm:py-10">
-          <div><h4 className="text-brand uppercase text-sm mb-2.5">About {site.name}</h4><p className="text-sm">{site.name} sells computers and accessories in {site.address}. Call us on {site.phone} for more info.</p></div>
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <img src={logo} alt="Billionaires Computers" className="h-10 w-auto" />
+              <div className="leading-tight">
+                <div className="font-bold text-[16px] text-ink">Billionaires</div>
+                <div className="font-bold text-[18px] text-brand -mt-0.5">Computers</div>
+              </div>
+            </div>
+            <h4 className="text-brand uppercase text-sm mb-2">About {site.name}</h4>
+            <p className="text-sm">{site.name} sells computers and accessories in {site.address}. Call us on {site.phone} for more info.</p>
+          </div>
           <div><h4 className="text-brand uppercase text-sm mb-2.5">Quick links</h4><div className="flex flex-col gap-1"><Link to="/collections/all" className="hover:text-brand">Search</Link><Link to="/contact" className="hover:text-brand">Contact Us</Link><Link to="/about" className="hover:text-brand">About</Link></div></div>
           <div><h4 className="text-brand uppercase text-sm mb-2.5">Get deals and discounts</h4><p className="text-sm mb-3">Sign up with your email address to get monthly deals</p><input placeholder="Your email" className="p-3 w-full border border-line mb-2.5" /><button className="inline-block bg-brand text-white px-6 py-3 font-semibold hover:bg-brand-dark">Subscribe</button></div>
         </div>

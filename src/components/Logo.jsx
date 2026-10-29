@@ -25,10 +25,10 @@ export default function Logo({ size = 'md', className = '' }) {
     <span className={`inline-flex items-center gap-2 sm:gap-3 ${className}`.trim()}>
       <img src={logo} alt="Billionaire's Computers" className={`${s.img} w-auto shrink-0`} />
       <span className="flex flex-col items-center text-center leading-tight">
-        <span className={`font-bold uppercase whitespace-nowrap text-[color:var(--brand-navy)] ${s.line1}`}>
+        <span className={`font-bold uppercase whitespace-nowrap text-navy ${s.line1}`}>
           Billionaire's
         </span>
-        <span className={`font-bold uppercase whitespace-nowrap text-[color:var(--brand-blue)] ${s.line2}`}>
+        <span className={`font-bold uppercase whitespace-nowrap text-primary ${s.line2}`}>
           Computers
         </span>
       </span>

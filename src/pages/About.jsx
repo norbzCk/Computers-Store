@@ -8,7 +8,7 @@ export default function About() {
         <div className="flex items-center justify-center mb-6">
           <Logo size="lg" />
         </div>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl text-brand mb-3 text-center">About {site.name}</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl text-primary mb-3 text-center">About {site.name}</h1>
         <p className="text-center max-w-2xl mx-auto">{site.name} is a computer and accessories retailer in {site.address}. Edit this text in src/pages/About.jsx.</p>
       </div>
     </div>

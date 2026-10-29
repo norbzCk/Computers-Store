@@ -1,16 +1,15 @@
 @import "tailwindcss";
 
-:root {
-  --brand-navy: #0b1f3a;
-  --brand-blue: #1f4fe0;
-}
-
 @theme {
-  --color-brand: #d6185b;
-  --color-brand-dark: #b01249;
+  --color-primary: #1f4fe0;
+  --color-primary-hover: #1a42bd;
+  --color-primary-soft: #e8eefc;
+  --color-navy: #0b1f3a;
+  --color-danger: #b91c1c;
+  --color-error: #dc2626;
   --color-ink: #46535b;
   --color-text: #677279;
-  --color-bg: #f3f5f6;
+  --color-bg: #f7f5ef;
   --color-line: #e4e8ea;
   --color-green: #0a8a0a;
   --color-top: #5b5b5b;
@@ -29,12 +28,23 @@ body {
   @apply w-full;
 }
 
-a {
-  @apply text-inherit no-underline;
+@layer base {
+  a {
+    @apply text-inherit no-underline;
+  }
 }
 
 button,
 input,
 select {
   font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--color-primary);
 }

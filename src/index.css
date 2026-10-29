@@ -5,6 +5,13 @@
   --color-primary-hover: #1a42bd;
   --color-primary-soft: #e8eefc;
   --color-navy: #0b1f3a;
+  --color-violet: #7c3aed;
+  --color-sky: #0ea5e9;
+  --color-mint: #10b981;
+  --color-sun: #f59e0b;
+  --color-peach: #fb923c;
+  --color-ocean: #0284c7;
+  --color-amber: #b45309;
   --color-danger: #b91c1c;
   --color-error: #dc2626;
   --color-ink: #46535b;
@@ -22,6 +29,11 @@ html {
 
 body {
   @apply bg-bg text-text font-sans text-base leading-relaxed w-full min-h-screen;
+  background-image:
+    radial-gradient(circle at 12% 0%, rgb(31 79 224 / 0.10), transparent 32%),
+    radial-gradient(circle at 88% 6%, rgb(124 58 237 / 0.08), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgb(245 158 11 / 0.08), transparent 38%);
+  background-attachment: fixed;
 }
 
 #root {
@@ -36,7 +48,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -47,4 +60,197 @@ select {
 
 input[type="checkbox"] {
   accent-color: var(--color-primary);
+}
+
+@keyframes delivery-pan {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes delivery-shine {
+  0% {
+    opacity: 0;
+    transform: translateX(-160%) skewX(-18deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+    transform: translateX(420%) skewX(-18deg);
+  }
+  60%, 100% {
+    opacity: 0;
+    transform: translateX(420%) skewX(-18deg);
+  }
+}
+
+@keyframes delivery-bob {
+  0%, 100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(6deg);
+  }
+}
+
+@keyframes delivery-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgb(255 255 255 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 0);
+  }
+}
+
+.delivery-bar {
+  background-image: linear-gradient(110deg, #1f4fe0 0%, #4c1d95 22%, #831843 45%, #9a3412 68%, #1f4fe0 100%);
+  background-size: 260% 100%;
+  background-position: 0% 50%;
+  animation: delivery-pan 9s ease-in-out infinite;
+}
+
+.delivery-shine {
+  left: -40%;
+  background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 0.34) 48%, transparent 72%);
+  animation: delivery-shine 4.5s ease-in-out infinite;
+}
+
+.delivery-icon {
+  animation: delivery-bob 1.8s ease-in-out infinite, delivery-ring 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .delivery-bar,
+  .delivery-icon {
+    animation: none;
+  }
+
+  .delivery-shine {
+    display: none;
+  }
+}
+
+@keyframes float-soft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+.text-gradient {
+  background-image: linear-gradient(100deg, var(--color-primary) 0%, var(--color-violet) 38%, var(--color-ocean) 68%, var(--color-amber) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.price-gradient {
+  background-image: linear-gradient(100deg, var(--color-primary), var(--color-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-gradient {
+  background-color: var(--color-primary);
+  background-image: linear-gradient(110deg, var(--color-primary) 0%, var(--color-violet) 52%, var(--color-ocean) 100%);
+  background-size: 180% 100%;
+  background-position: 0% 50%;
+  color: #fff;
+  box-shadow: 0 10px 24px -12px rgb(31 79 224 / 0.8);
+  transition: background-position 350ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.btn-gradient:hover {
+  background-position: 100% 50%;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -12px rgb(31 79 224 / 0.9);
+}
+
+.btn-gradient:disabled {
+  background-image: none;
+  background-color: #8a959b;
+  box-shadow: none;
+  transform: none;
+}
+
+.badge-sale {
+  background-image: linear-gradient(110deg, #fde68a 0%, #fbbf24 55%, #fb923c 100%);
+  color: #4a2500;
+  box-shadow: 0 4px 14px -4px rgb(245 158 11 / 0.55);
+}
+
+.art-stage {
+  background-color: #fff;
+  background-image:
+    radial-gradient(circle at 50% 45%, rgb(232 238 252 / 0.9), transparent 65%),
+    linear-gradient(135deg, #fff 0%, #f6f9ff 55%, #fff8ed 100%);
+}
+
+.panel-gradient {
+  background-color: #fff;
+  background-image:
+    radial-gradient(circle at 0% 0%, rgb(31 79 224 / 0.08), transparent 35%),
+    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.07), transparent 35%),
+    linear-gradient(135deg, #fff 0%, #fbfdff 100%);
+}
+
+.hero-panel {
+  background-color: #fff;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgb(31 79 224 / 0.18), transparent 36%),
+    radial-gradient(circle at 88% 12%, rgb(124 58 237 / 0.16), transparent 38%),
+    radial-gradient(circle at 72% 100%, rgb(245 158 11 / 0.18), transparent 42%),
+    linear-gradient(135deg, #ffffff 0%, #eef3ff 46%, #fff8e8 100%);
+  box-shadow: 0 30px 70px -45px rgb(11 31 58 / 0.55);
+}
+
+.footer-gradient {
+  background-color: #081226;
+  background-image:
+    radial-gradient(circle at 12% 0%, rgb(31 79 224 / 0.4), transparent 42%),
+    radial-gradient(circle at 88% 15%, rgb(124 58 237 / 0.32), transparent 45%),
+    linear-gradient(135deg, #081226 0%, #0b1f3a 48%, #1b1240 100%);
+}
+
+nav a[aria-current="page"] {
+  position: relative;
+  color: var(--color-primary);
+}
+
+nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 3px;
+  border-radius: 999px;
+  background-image: linear-gradient(90deg, var(--color-primary), var(--color-violet), var(--color-sun));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-soft {
+    animation: none;
+  }
+
+  .btn-gradient {
+    transition: none;
+  }
 }

@@ -18,17 +18,17 @@ const sizes = {
   },
 }
 
-export default function Logo({ size = 'md', className = '' }) {
+export default function Logo({ size = 'md', className = '', light = false }) {
   const s = sizes[size] || sizes.md
 
   return (
     <span className={`inline-flex items-center gap-2 sm:gap-3 ${className}`.trim()}>
-      <img src={logo} alt="Billionaire's Computers" className={`${s.img} w-auto shrink-0`} />
+      <img src={logo} alt="Billionaire's Computers" className={`${s.img} w-auto shrink-0 ${light ? 'rounded-full bg-white/95 p-1 shadow-lg' : ''}`} />
       <span className="flex flex-col items-center text-center leading-tight">
-        <span className={`font-bold uppercase whitespace-nowrap text-navy ${s.line1}`}>
+        <span className={`font-bold uppercase whitespace-nowrap ${light ? 'text-white' : 'text-navy'} ${s.line1}`}>
           Billionaire's
         </span>
-        <span className={`font-bold uppercase whitespace-nowrap text-primary ${s.line2}`}>
+        <span className={`font-bold uppercase whitespace-nowrap ${light ? 'text-sky-200' : 'text-primary'} ${s.line2}`}>
           Computers
         </span>
       </span>

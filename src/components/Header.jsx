@@ -33,7 +33,7 @@ export default function Header() {
   const [cat, setCat] = useState('all')
   const go = (e) => { e.preventDefault(); nav(`/collections/${cat}?q=${encodeURIComponent(q)}`) }
   const count = items.reduce((s, i) => s + i.qty, 0)
-  const main = ['laptops', 'desktops', 'macbooks', 'printers', 'external-hard-disks', 'toners-cartridges']
+  const main = ['laptops', 'desktops', 'macbooks', 'printers', 'external-hard-disks', 'toners']
   return (
     <>
       <div className="sticky top-0 z-20">

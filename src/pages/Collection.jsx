@@ -2,18 +2,19 @@ import { useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { cats } from '../data'
 import Card from '../components/Card'
-import { catName } from '../utils'
+import { canonicalCategory, catName } from '../utils'
 import { useProducts } from '../context/ProductsContext'
 
 export default function Collection() {
   const { products } = useProducts()
   const { slug = 'all' } = useParams()
+  const category = canonicalCategory(slug)
   const [sp] = useSearchParams()
   const q = (sp.get('q') || '').toLowerCase()
   const [sort, setSort] = useState('featured')
   const [list, setList] = useState(false)
   const [brands, setBrands] = useState([])
-  let items = products.filter((p) => (slug === 'all' || p.category === slug) && p.title.toLowerCase().includes(q))
+  let items = products.filter((p) => (category === 'all' || p.category === category) && p.name.toLowerCase().includes(q))
   const allBrands = [...new Set(items.map((p) => p.brand))]
   if (brands.length) items = items.filter((p) => brands.includes(p.brand))
   items = [...items].sort((a, b) => sort === 'low' ? a.price - b.price : sort === 'high' ? b.price - a.price : 0)
@@ -24,7 +25,7 @@ export default function Collection() {
         <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-4 py-2 text-xs shadow-sm backdrop-blur sm:text-sm">
           <Link to="/" className="font-medium text-primary transition hover:text-violet">Home</Link>
           <span className="text-text/50">›</span>
-          <span className="font-semibold text-ink">{catName(slug)}</span>
+          <span className="font-semibold text-ink">{catName(category)}</span>
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-[288px_1fr] gap-6 lg:gap-[30px] items-start pb-10 sm:pb-[50px]">
@@ -35,7 +36,7 @@ export default function Collection() {
               <Link to="/" className="-mx-2 rounded-lg px-2 py-1 transition hover:bg-primary-soft/70 hover:text-primary">Home</Link>
               <Link to="/about" className="-mx-2 rounded-lg px-2 py-1 transition hover:bg-primary-soft/70 hover:text-primary">About</Link>
               {cats.slice(0, 6).map((c) => {
-                const active = slug === c.slug
+                const active = category === c.slug
                 return (
                   <Link key={c.slug} to={`/collections/${c.slug}`} className={active ? '-mx-2 rounded-lg bg-primary-soft px-2 py-1 font-semibold text-primary' : '-mx-2 rounded-lg px-2 py-1 transition hover:bg-primary-soft/70 hover:text-primary'}>{c.name} ({products.filter((p) => p.category === c.slug).length})</Link>
                 )
@@ -53,7 +54,7 @@ export default function Collection() {
         <main className="panel-gradient relative overflow-hidden rounded-2xl border border-line shadow-sm">
           <div className="p-5 sm:p-[30px]">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-              <h1 className="text-xl sm:text-2xl md:text-3xl text-gradient">{catName(slug)}</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl text-gradient">{catName(category)}</h1>
               <span className="rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold text-primary">{items.length} products</span>
             </div>
             <div className="flex flex-wrap gap-3 sm:gap-6 items-center text-sm mb-2">

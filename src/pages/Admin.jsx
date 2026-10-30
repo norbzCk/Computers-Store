@@ -3,16 +3,29 @@ import { Link } from 'react-router-dom'
 import { cats } from '../data'
 import { useProducts } from '../context/ProductsContext'
 import Art from '../components/Art'
-import { catName, money } from '../utils'
+import { catName, money, stockLabel } from '../utils'
 
 const emptyForm = {
-  title: '',
+  name: '',
   category: 'laptops',
   brand: '',
   price: '',
-  compare: '',
-  stock: '1',
-  specs: '',
+  oldPrice: '',
+  condition: '',
+  stock: 'in-stock',
+  stockQty: '',
+  warranty: '',
+  description: '',
+  featured: false,
+  cpu: '',
+  ram: '',
+  storage: '',
+  screen: '',
+  gpu: '',
+  os: '',
+  batteryHealth: '',
+  yearReleased: '',
+  notes: '',
   image: '',
 }
 
@@ -56,10 +69,13 @@ export default function Admin() {
   const [imageBusy, setImageBusy] = useState(false)
   const fileRef = useRef(null)
 
-  const update = (name) => (event) => setForm((current) => ({ ...current, [name]: event.target.value }))
+  const update = (name) => (event) => {
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
+    setForm((current) => ({ ...current, [name]: value }))
+  }
 
-  const makeSlug = (title) => {
-    const base = slugify(title) || 'product'
+  const makeSlug = (name) => {
+    const base = slugify(name) || 'product'
     let slug = base
     let counter = 2
     while (products.some((p) => p.slug === slug)) slug = `${base}-${counter++}`
@@ -90,30 +106,47 @@ export default function Admin() {
     event.preventDefault()
     setError('')
     setMessage('')
-    const title = form.title.trim()
+    const name = form.name.trim()
     const brand = form.brand.trim()
     const price = Number(form.price)
-    const compare = form.compare === '' ? undefined : Number(form.compare)
-    const stock = Number(form.stock)
-    if (!title) return setError('Product name is required.')
+    const oldPrice = form.oldPrice === '' ? undefined : Number(form.oldPrice)
+    const stockQty = form.stock === 'sold' ? 0 : form.stockQty === '' ? null : Number(form.stockQty)
+    if (!name) return setError('Product name is required.')
     if (!brand) return setError('Brand is required.')
     if (!Number.isFinite(price) || price <= 0) return setError('Enter a valid price.')
-    if (compare !== undefined && (!Number.isFinite(compare) || compare <= price)) return setError('Compare-at price must be higher than the selling price.')
-    if (!Number.isFinite(stock) || stock < 0) return setError('Enter a valid stock quantity.')
+    if (oldPrice !== undefined && (!Number.isFinite(oldPrice) || oldPrice <= price)) return setError('Old price must be higher than the selling price.')
+    if (stockQty !== null && (!Number.isFinite(stockQty) || stockQty < 0)) return setError('Enter a valid stock quantity.')
     addProduct({
-      slug: makeSlug(title),
-      title,
+      id: `custom-${Date.now()}`,
+      slug: makeSlug(name),
+      name,
       category: form.category,
       brand: brand.toUpperCase(),
       price: Math.round(price),
-      compare: compare === undefined ? undefined : Math.round(compare),
-      stock: Math.round(stock),
-      specs: form.specs.split('\n').map((line) => line.trim()).filter(Boolean),
-      image: form.image || undefined,
+      oldPrice: oldPrice === undefined ? undefined : Math.round(oldPrice),
+      condition: form.condition,
+      specs: {
+        cpu: form.cpu.trim(),
+        ram: form.ram.trim(),
+        storage: form.storage.trim(),
+        screen: form.screen.trim(),
+        gpu: form.gpu.trim(),
+        os: form.os.trim(),
+        batteryHealth: form.batteryHealth.trim(),
+        yearReleased: form.yearReleased.trim(),
+        notes: form.notes.split('\n').map((line) => line.trim()).filter(Boolean),
+      },
+      warranty: form.warranty.trim(),
+      stock: form.stock,
+      stockQty,
+      images: form.image ? [form.image] : [],
+      videoUrl: '',
+      description: form.description.trim(),
+      featured: form.featured,
       custom: true,
       createdAt: Date.now(),
     })
-    setMessage(`${title} was added and is now live in the storefront.`)
+    setMessage(`${name} was added and is now live in the storefront.`)
     setForm(emptyForm)
     if (fileRef.current) fileRef.current.value = ''
   }
@@ -122,7 +155,7 @@ export default function Admin() {
     <div className="mx-auto max-w-[1180px] px-4 py-10 pb-12 sm:px-6 sm:pb-[60px] lg:px-8">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/70 px-3 py-1 dark:border-primary/30 text-[11px] font-bold uppercase tracking-[0.18em] text-primary shadow-sm">
+          <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/70 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-primary shadow-sm dark:border-primary/30">
             <span className="h-2 w-2 rounded-full bg-gradient-to-r from-primary to-violet" />
             Store admin
           </span>
@@ -140,7 +173,7 @@ export default function Admin() {
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="sm:col-span-2">
             <span className="mb-1.5 block text-sm font-semibold text-ink">Product name</span>
-            <input required value={form.title} onChange={update('title')} placeholder="e.g. HP Laptop 15 Core i5 8GB 512GB" className={fieldClass} />
+            <input required value={form.name} onChange={update('name')} placeholder="e.g. HP Laptop 15 Core i5 8GB 512GB" className={fieldClass} />
           </label>
           <label>
             <span className="mb-1.5 block text-sm font-semibold text-ink">Category</span>
@@ -153,26 +186,68 @@ export default function Admin() {
             <input required value={form.brand} onChange={update('brand')} placeholder="e.g. HP" className={fieldClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Price (TZS)</span>
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Price (Tsh)</span>
             <input required type="number" min="1" step="1" value={form.price} onChange={update('price')} placeholder="1500000" className={fieldClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Compare-at price (optional)</span>
-            <input type="number" min="0" step="1" value={form.compare} onChange={update('compare')} placeholder="1800000" className={fieldClass} />
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Old price (optional)</span>
+            <input type="number" min="0" step="1" value={form.oldPrice} onChange={update('oldPrice')} placeholder="1800000" className={fieldClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Stock quantity</span>
-            <input required type="number" min="0" step="1" value={form.stock} onChange={update('stock')} className={fieldClass} />
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Condition</span>
+            <select value={form.condition} onChange={update('condition')} className={fieldClass}>
+              <option value="">Not specified</option>
+              <option value="new">New</option>
+              <option value="used">Used</option>
+              <option value="refurbished">Refurbished</option>
+            </select>
+          </label>
+          <label>
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Stock status</span>
+            <select value={form.stock} onChange={update('stock')} className={fieldClass}>
+              <option value="in-stock">In stock</option>
+              <option value="low">Low stock</option>
+              <option value="sold">Sold</option>
+            </select>
+          </label>
+          <label>
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Stock quantity (optional)</span>
+            <input type="number" min="0" step="1" value={form.stockQty} onChange={update('stockQty')} placeholder="e.g. 5" className={fieldClass} />
+          </label>
+          <label>
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Warranty</span>
+            <input value={form.warranty} onChange={update('warranty')} placeholder="e.g. 3 months" className={fieldClass} />
+          </label>
+          <label className="sm:col-span-2">
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Short description (optional)</span>
+            <textarea rows="2" value={form.description} onChange={update('description')} placeholder="Short factual description of the product." className={fieldClass} />
+          </label>
+          <label className="sm:col-span-2 flex items-center gap-2 text-sm font-semibold text-ink">
+            <input type="checkbox" checked={form.featured} onChange={update('featured')} />
+            Feature this product on the home page
+          </label>
+          <div className="sm:col-span-2">
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Specifications</span>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <input value={form.cpu} onChange={update('cpu')} placeholder="Processor" className={fieldClass} />
+              <input value={form.ram} onChange={update('ram')} placeholder="RAM" className={fieldClass} />
+              <input value={form.storage} onChange={update('storage')} placeholder="Storage" className={fieldClass} />
+              <input value={form.screen} onChange={update('screen')} placeholder="Display" className={fieldClass} />
+              <input value={form.gpu} onChange={update('gpu')} placeholder="Graphics" className={fieldClass} />
+              <input value={form.os} onChange={update('os')} placeholder="Operating system" className={fieldClass} />
+              <input value={form.batteryHealth} onChange={update('batteryHealth')} placeholder="Battery health" className={fieldClass} />
+              <input value={form.yearReleased} onChange={update('yearReleased')} placeholder="Year released" className={fieldClass} />
+            </div>
+          </div>
+          <label className="sm:col-span-2">
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Other specifications (optional)</span>
+            <textarea rows="3" value={form.notes} onChange={update('notes')} placeholder={'One line per item\ne.g. Keyboard and mouse included'} className={fieldClass} />
           </label>
           <div>
             <span className="mb-1.5 block text-sm font-semibold text-ink">Product image (optional)</span>
             <input ref={fileRef} type="file" accept="image/*" onChange={handleImage} className="block w-full rounded-xl border border-line bg-surface p-2.5 text-sm file:mr-3 file:rounded-full file:border-0 file:bg-primary-soft file:px-3 file:py-1.5 file:font-semibold file:text-primary" />
             <p className="mt-1 text-xs text-text">{imageBusy ? 'Preparing image…' : 'Images are resized and saved in this browser.'}</p>
           </div>
-          <label className="sm:col-span-2">
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Specifications</span>
-            <textarea rows="4" value={form.specs} onChange={update('specs')} placeholder={'One specification per line\ne.g. Intel Core i5-1335U\n8GB RAM\n512GB SSD'} className={fieldClass} />
-          </label>
         </div>
 
         {form.image && (
@@ -186,7 +261,7 @@ export default function Admin() {
           </div>
         )}
 
-        {error && <p className="mt-4 rounded-2xl border border-[#fecaca] bg-[#fef2f2] px-4 py-3 text-sm font-semibold text-danger dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">{error}</p>}
+        {error && <p className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-danger dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">{error}</p>}
         {message && <p className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-300">{message} <Link to="/" className="underline">View store</Link></p>}
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -213,11 +288,11 @@ export default function Admin() {
             {customProducts.map((p) => (
               <div key={p.slug} className="flex flex-wrap items-center gap-3 p-3 sm:flex-nowrap">
                 <div className="art-stage grid h-14 w-20 shrink-0 place-items-center overflow-hidden rounded-xl p-1.5">
-                  {p.image ? <img src={p.image} alt={p.title} className="h-full w-full object-contain" /> : <Art kind={p.category} />}
+                  {p.images?.[0] ? <img src={p.images[0]} alt={p.name} className="h-full w-full object-contain" /> : <Art kind={p.category} />}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold text-ink">{p.title}</p>
-                  <p className="text-xs text-text">{catName(p.category)} · {money(p.price)} · {p.stock} in stock</p>
+                  <p className="truncate text-sm font-semibold text-ink">{p.name}</p>
+                  <p className="text-xs text-text">{catName(p.category)} · {money(p.price)} · {stockLabel(p.stock)}{p.stockQty != null ? ` (${p.stockQty})` : ''}</p>
                 </div>
                 <Link to={`/products/${p.slug}`} className="text-xs font-bold text-primary hover:underline">View</Link>
                 <button type="button" onClick={() => removeProduct(p.slug)} className="text-xs font-bold text-danger hover:underline">Remove</button>

@@ -23,7 +23,7 @@ export default function Drawer() {
         <div className="flex-1 overflow-auto px-6">
           {items.length === 0 && <div className="mt-8 rounded-2xl border border-dashed border-primary/25 bg-surface/70 p-6 text-center"><p className="font-semibold text-ink">Your cart is empty.</p><p className="mt-1 text-sm">Add something great and it will show up here.</p></div>}
           {items.map((i) => <div className="flex justify-between gap-3 border-b border-line py-4 text-sm" key={i.p.slug}>
-            <div><p className="font-semibold text-ink">{i.p.title}</p><p className="text-text">{i.qty} × {money(i.p.price)}</p></div>
+            <div><p className="font-semibold text-ink">{i.p.name}</p><p className="text-text">{i.qty} × {money(i.p.price)}</p></div>
             <button onClick={() => remove(i.p.slug)} className="h-fit rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-danger transition hover:bg-red-100 hover:text-error dark:bg-red-950/40 dark:hover:bg-red-900/50">Remove</button>
           </div>)}
         </div>

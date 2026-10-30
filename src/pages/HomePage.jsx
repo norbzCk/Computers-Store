@@ -3,6 +3,7 @@ import { cats } from '../data'
 import Art from '../components/Art'
 import Card from '../components/Card'
 import { useProducts } from '../context/ProductsContext'
+import { isInStock } from '../utils'
 
 const tileTones = [
   'from-sky-100 via-cyan-50 to-surface hover:border-sky-300 dark:from-sky-950/70 dark:via-slate-900 dark:to-surface dark:hover:border-sky-500',
@@ -15,7 +16,7 @@ const tileTones = [
 
 export default function HomePage() {
   const { products } = useProducts()
-  const fresh = products.filter((p) => p.stock !== 0).slice(0, 8)
+  const fresh = products.filter(isInStock).slice(0, 8)
   return (
     <div className="max-w-[1280px] mx-auto px-2 sm:px-6 lg:px-8 pt-6 sm:pt-8 lg:pt-10">
       <section className="hero-panel relative overflow-hidden rounded-3xl border border-white/70 dark:border-white/10 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0 p-6 sm:p-10 md:p-12 lg:p-14 xl:p-16 mb-8 sm:mb-10 lg:mb-12">

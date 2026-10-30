@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { site } from '../data'
+import { store } from '../data'
 import Logo from './Logo'
 
 const featureTones = [
@@ -25,8 +25,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 py-8 sm:py-10 md:grid-cols-3 md:gap-10 lg:gap-12">
           <div>
             <Logo size="sm" light className="mb-4" />
-            <h4 className="mb-2 text-sm uppercase text-sky-200">About {site.name}</h4>
-            <p className="text-sm text-white/65">{site.name} sells computers and accessories in {site.address}. Call us on {site.phone} for more info.</p>
+            <h4 className="mb-2 text-sm uppercase text-sky-200">About {store.name}</h4>
+            <p className="text-sm text-white/65">{store.name} sells computers and accessories in {store.address}. Call us on {store.phone} for more info.</p>
           </div>
           <div>
             <h4 className="mb-2.5 text-sm uppercase text-sky-200">Quick links</h4>
@@ -45,8 +45,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col gap-2 border-t border-white/10 pt-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
-          <span>© {site.name}</span>
-          <span>{site.address}</span>
+          <span>© {store.name}</span>
+          <span>{store.address}</span>
         </div>
       </div>
     </footer>

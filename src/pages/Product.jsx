@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { site } from '../data'
+import { store } from '../data'
 import { useCart } from '../context/CartContext'
 import Art from '../components/Art'
 import Card from '../components/Card'
@@ -42,7 +42,7 @@ export default function Product() {
         <div className="panel-gradient relative overflow-hidden rounded-2xl border border-line p-5 shadow-lg sm:p-[30px]">
           <h1 className="text-xl sm:text-2xl md:text-[28px] text-gradient mb-3 leading-tight">{p.title}</h1>
           {p.compare && <span className="badge-sale mb-2.5 inline-block rounded-full px-3 py-1 text-xs font-bold sm:text-sm">Save {(p.compare - p.price).toLocaleString('en-US')} TZS</span>}
-          <div className="text-xs uppercase border-b border-line pb-4 mb-4">{site.name}</div>
+          <div className="text-xs uppercase border-b border-line pb-4 mb-4">{store.name}</div>
           <div className="text-2xl font-bold sm:text-[28px]"><span className="price-gradient">{money(p.price)}</span>{p.compare && <s className="ml-2.5 text-lg text-[#9aa5ab] dark:text-white/45">{money(p.compare)}</s>}</div>
           <div className="flex gap-4 items-center my-5"><b>Quantity:</b><select value={qty} onChange={(e) => setQty(+e.target.value)} className="rounded-xl border border-line bg-surface px-3 py-2.5 shadow-sm sm:px-4 sm:py-3">{[1, 2, 3, 4, 5].map((n) => <option key={n}>{n}</option>)}</select></div>
           <button className="btn-gradient inline-block rounded-full px-8 py-3.5 font-bold" disabled={sold} onClick={() => add(p, qty)}>{sold ? 'Sold out' : 'Add to cart'}</button>

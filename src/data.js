@@ -1,10 +1,25 @@
 // Edit this file to change store details, categories and products.
-export const site = {
+// TODO: Owner to confirm the correct WhatsApp and phone number. Placeholder uses the Instagram number.
+export const store = {
   name: "Billionaire's Computers",
-  phone: '+255 774458938',
+  whatsappNumber: '255763347391',
+  phone: '+255 763 347 391',
   email: 'info@billionaires.co.tz',
-  hours: ['Monday - Friday 9am to 5pm', 'Saturday 10am to 2pm'],
-  address: 'Dar es Salaam, Tanzania',
+  address: 'Sinza Makaburini, Dar es Salaam',
+  mapLink: 'https://www.google.com/maps/search/?api=1&query=Sinza+Makaburini%2C+Dar+es+Salaam',
+  openingHours: ['Monday - Friday 9am to 5pm', 'Saturday 10am to 2pm'],
+  instagramUrl: 'https://www.instagram.com/billionairescomputers/',
+  url: 'https://billionaires.co.tz',
+  deliveryInfo: {
+    summary: 'Free delivery to selected locations in Dar es Salaam.',
+    freeDeliveryNote: 'Free delivery applies to selected locations only. Confirm your area on WhatsApp before ordering.',
+    zones: [
+      { name: 'Selected Dar es Salaam locations', fee: 'Free', estimatedTime: 'Same day or next day' },
+      { name: 'Other Dar es Salaam areas', fee: 'Owner to confirm', estimatedTime: 'Owner to confirm' },
+      { name: 'Outside Dar es Salaam', fee: 'Quoted on request', estimatedTime: 'Owner to confirm' },
+    ],
+    notes: ['Placeholder delivery fees and timings. Owner to confirm before publishing.'],
+  },
 }
 export const cats = [
   ['laptops', 'Laptops'], ['desktops', 'Desktops'], ['macbooks', 'Macbooks'], ['printers', 'Printers'],

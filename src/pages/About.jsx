@@ -1,4 +1,4 @@
-import { site } from '../data'
+import { store } from '../data'
 import Logo from '../components/Logo'
 
 export default function About() {
@@ -13,8 +13,8 @@ export default function About() {
               <Logo size="lg" />
             </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl text-gradient mb-3 text-center">About {site.name}</h1>
-          <p className="mx-auto max-w-2xl text-center text-ink/80">{site.name} is a computer and accessories retailer in {site.address}. Edit this text in src/pages/About.jsx.</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl text-gradient mb-3 text-center">About {store.name}</h1>
+          <p className="mx-auto max-w-2xl text-center text-ink/80">{store.name} is a computer and accessories retailer in {store.address}. Edit this text in src/pages/About.jsx.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-2.5">
             {['Dar es Salaam', 'Warranty on every item', 'Free delivery available'].map((item) => <span key={item} className="rounded-full border border-white/70 bg-surface/70 px-4 dark:border-white/10 py-2 text-xs font-bold uppercase tracking-wide text-primary shadow-sm">{item}</span>)}
           </div>

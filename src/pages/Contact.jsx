@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { site } from '../data'
+import { store } from '../data'
 
 export default function Contact() {
   const [sent, setSent] = useState(false)
@@ -18,16 +18,16 @@ export default function Contact() {
           <div className="mt-7 grid gap-3 sm:grid-cols-3">
             <div className="rounded-2xl border border-line bg-surface/80 p-4 text-left shadow-sm">
               <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">Visit us</p>
-              <p className="mt-1 font-semibold text-ink">{site.address}</p>
+              <p className="mt-1 font-semibold text-ink">{store.address}</p>
             </div>
             <div className="rounded-2xl border border-line bg-surface/80 p-4 text-left shadow-sm">
               <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-violet">Call or email</p>
-              <p className="mt-1 font-semibold text-ink">{site.phone}</p>
-              <p className="text-sm">{site.email}</p>
+              <p className="mt-1 font-semibold text-ink">{store.phone}</p>
+              <p className="text-sm">{store.email}</p>
             </div>
             <div className="rounded-2xl border border-line bg-surface/80 p-4 text-left shadow-sm">
               <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sky">Opening hours</p>
-              {site.hours.map((h) => <p key={h} className="mt-1 text-sm text-ink">{h}</p>)}
+              {store.openingHours.map((h) => <p key={h} className="mt-1 text-sm text-ink">{h}</p>)}
             </div>
           </div>
           <form onSubmit={(e) => { e.preventDefault(); setSent(true) }} className="mx-auto mt-8 grid max-w-[680px] gap-3 rounded-2xl border border-line bg-surface/90 p-5 shadow-sm sm:p-6">

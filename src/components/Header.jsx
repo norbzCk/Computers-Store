@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { cats, moreCats, site } from '../data'
+import { cats, moreCats, store } from '../data'
 import { useCart } from '../context/CartContext'
 import { useTheme } from '../context/ThemeContext'
 import { catName } from '../utils'
@@ -87,8 +87,8 @@ export default function Header() {
               </span>
               <span><strong className="font-extrabold tracking-wide">FREE Delivery</strong> to Selected Locations in Dar Es Salaam.</span>
             </span>
-            <a href={`tel:${site.phone.replace(/[^\d+]/g, '')}`} className="group inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-primary shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-primary-soft hover:shadow-md sm:text-sm">
-              Call now on {site.phone}
+            <a href={`tel:${store.phone.replace(/[^\d+]/g, '')}`} className="group inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-primary shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-primary-soft hover:shadow-md sm:text-sm">
+              Call now on {store.phone}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>

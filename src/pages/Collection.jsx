@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { cats, store } from '../data'
 import Card from '../components/Card'
 import WhatsAppIcon from '../components/WhatsAppIcon'
+import Seo from '../components/Seo'
 import { canonicalCategory, catName, conditionLabel, isInStock, isSold, whatsappUrl } from '../utils'
 import { useProducts } from '../context/ProductsContext'
 
@@ -81,6 +82,27 @@ export default function Collection() {
   const enquiry = q
     ? `Hello ${store.name}, I'm looking for "${query}". Is it available?`
     : `Hello ${store.name}, I'm looking for a product in ${catName(category)}. Is it available?`
+  const seoTitle = q ? `Search results for ${query}` : `${catName(category)} in Dar es Salaam`
+  const seoDescription = q
+    ? `Search results for "${query}" in ${catName(category)} at ${store.name} in ${store.address}.`
+    : `Browse ${catName(category).toLowerCase()} at ${store.name} in ${store.address}.`
+  const seoJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: seoTitle,
+    description: seoDescription,
+    url: `${store.url}/collections/${category}`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: items.length,
+      itemListElement: items.slice(0, 20).map((product, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${store.url}/products/${product.slug}`,
+        name: product.name,
+      })),
+    },
+  }
   const categoryMenu = (
     <div className="flex flex-col gap-1">
       <Link to="/" className="-mx-2 rounded-lg px-2 py-1 transition hover:bg-primary-soft/70 hover:text-primary">Home</Link>
@@ -143,6 +165,7 @@ export default function Collection() {
 
   return (
     <div className="max-w-[1420px] mx-auto px-4 sm:px-5">
+      <Seo title={seoTitle} description={seoDescription} path={`/collections/${category}`} robots={q ? 'noindex,follow' : 'index,follow'} jsonLd={seoJsonLd} />
       <div className="py-4 sm:py-[22px] sm:pb-[20px]">
         <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-4 py-2 text-xs shadow-sm backdrop-blur sm:text-sm">
           <Link to="/" className="font-medium text-primary transition hover:text-violet">Home</Link>
@@ -181,7 +204,7 @@ export default function Collection() {
                 <p className="mt-1 text-sm text-text">Try clearing filters, another search, or ask us on WhatsApp.</p>
                 <div className="mt-4 flex flex-wrap justify-center gap-2">
                   <button type="button" onClick={clearFilters} className="rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-primary shadow-sm transition hover:border-primary/30 hover:bg-primary-soft">Clear filters</button>
-                  <a href={whatsappUrl(enquiry)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700"><WhatsAppIcon className="h-4 w-4" /> Ask on WhatsApp</a>
+                  <a href={whatsappUrl(enquiry)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-800"><WhatsAppIcon className="h-4 w-4" /> Ask on WhatsApp</a>
                 </div>
               </div>
             )}

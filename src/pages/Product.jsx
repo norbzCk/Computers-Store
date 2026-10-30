@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext'
 import Art from '../components/Art'
 import Card from '../components/Card'
 import WhatsAppIcon from '../components/WhatsAppIcon'
+import Seo from '../components/Seo'
 import { catName, conditionLabel, isInStock, isSold, money, productWhatsAppUrl, specEntries, specNotes, stockLabel } from '../utils'
 import { useProducts } from '../context/ProductsContext'
 
@@ -16,7 +17,7 @@ export default function Product() {
   const [tone, setTone] = useState(0)
   const [activeImage, setActiveImage] = useState(0)
   const p = products.find((x) => x.slug === slug)
-  if (!p) return <div className="max-w-[1420px] mx-auto px-4 sm:px-5"><div className="panel-gradient my-6 rounded-2xl border border-line p-6 shadow-sm sm:my-[30px] sm:p-[30px]">Product not found. <Link to="/collections/all" className="font-semibold text-primary hover:text-violet hover:underline">Browse all products</Link></div></div>
+  if (!p) return <div className="max-w-[1420px] mx-auto px-4 sm:px-5"><Seo title="Product not found" description="This product could not be found. Browse all products at Billionaire's Computers." robots="noindex,follow" /><div className="panel-gradient my-6 rounded-2xl border border-line p-6 shadow-sm sm:my-[30px] sm:p-[30px]">Product not found. <Link to="/collections/all" className="font-semibold text-primary hover:text-violet hover:underline">Browse all products</Link></div></div>
   const sold = isSold(p)
   const images = p.images || []
   const currentImage = images[Math.min(activeImage, Math.max(images.length - 1, 0))]
@@ -30,8 +31,46 @@ export default function Product() {
   ]
   const notes = specNotes(p)
   const rel = products.filter((x) => x.category === p.category && x.slug !== p.slug).slice(0, 4)
+  const seoImage = p.images?.[0] && !p.images[0].startsWith('data:') ? p.images[0] : undefined
+  const seoDescription = p.description || `${p.name} at ${store.name} in ${store.address}. Price ${money(p.price)}. Contact us on WhatsApp to confirm availability.`
+  const availability = isSold(p) ? 'SoldOut' : isInStock(p) ? (p.stock === 'low' ? 'LimitedAvailability' : 'InStock') : 'OutOfStock'
+  const conditionSchema = { new: 'NewCondition', used: 'UsedCondition', refurbished: 'RefurbishedCondition' }[p.condition]
+  const seoJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Product',
+        name: p.name,
+        sku: p.id,
+        brand: { '@type': 'Brand', name: p.brand },
+        category: catName(p.category),
+        url: `${store.url}/products/${p.slug}`,
+        description: seoDescription,
+        ...(seoImage ? { image: seoImage.startsWith('http') ? seoImage : `${store.url}${seoImage.startsWith('/') ? '' : '/'}${seoImage}` } : {}),
+        ...(conditionSchema ? { itemCondition: `https://schema.org/${conditionSchema}` } : {}),
+        additionalProperty: specEntries(p).map(([name, value]) => ({ '@type': 'PropertyValue', name, value })),
+        offers: {
+          '@type': 'Offer',
+          url: `${store.url}/products/${p.slug}`,
+          priceCurrency: 'TZS',
+          price: p.price,
+          availability: `https://schema.org/${availability}`,
+          seller: { '@type': 'Organization', name: store.name },
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: store.url },
+          { '@type': 'ListItem', position: 2, name: catName(p.category), item: `${store.url}/collections/${p.category}` },
+          { '@type': 'ListItem', position: 3, name: p.name, item: `${store.url}/products/${p.slug}` },
+        ],
+      },
+    ],
+  }
   return (
     <div className="max-w-[1420px] mx-auto px-4 sm:px-5">
+      <Seo title={p.name} description={seoDescription} path={`/products/${p.slug}`} image={seoImage} type="product" jsonLd={seoJsonLd} />
       <div className="py-4 sm:py-[22px] sm:pb-[20px]">
         <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-line bg-surface/80 px-4 py-2 text-xs shadow-sm backdrop-blur sm:text-sm">
           <Link to="/" className="font-medium text-primary transition hover:text-violet">Home</Link>
@@ -46,13 +85,13 @@ export default function Product() {
           <div className="p-5 sm:p-[30px]">
             <div className="art-stage relative aspect-[4/3] grid place-items-center rounded-2xl p-4 sm:p-8">
               {sold && <span className="absolute top-3 right-3 rounded-full bg-slate-500 px-3 py-1 text-xs font-bold text-white dark:bg-slate-600">Sold</span>}
-              {currentImage ? <img src={currentImage} alt={`${p.name}${images.length > 1 ? ` image ${activeImage + 1}` : ''}`} className="h-full w-full rounded-xl object-contain" /> : <Art kind={p.category} tone={tone} />}
+              {currentImage ? <img src={currentImage} alt={`${p.name}${images.length > 1 ? ` image ${activeImage + 1}` : ''}`} decoding="async" className="h-full w-full rounded-xl object-contain" /> : <Art kind={p.category} tone={tone} />}
             </div>
             {images.length > 1 && (
               <div className="mt-3 flex flex-wrap gap-2 sm:gap-2.5" aria-label="Product image gallery">
                 {images.map((src, index) => (
                   <button key={`${src.slice(0, 40)}-${index}`} onClick={() => setActiveImage(index)} aria-label={`View image ${index + 1}`} aria-pressed={activeImage === index} className={`grid h-12 w-16 place-items-center overflow-hidden rounded-lg border bg-surface transition duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow ${activeImage === index ? 'border-primary ring-2 ring-primary/20' : 'border-line'}`}>
-                    <img src={src} alt="" className="h-full w-full object-contain" />
+                    <img src={src} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />
                   </button>
                 ))}
               </div>
@@ -85,7 +124,7 @@ export default function Product() {
           {!sold && <div className="flex gap-4 items-center my-5"><b>Quantity:</b><select value={qty} onChange={(e) => setQty(+e.target.value)} className="rounded-xl border border-line bg-surface px-3 py-2.5 shadow-sm sm:px-4 sm:py-3">{[1, 2, 3, 4, 5].map((n) => <option key={n}>{n}</option>)}</select></div>}
           <div className={`flex flex-wrap gap-3 ${sold ? 'mt-5' : ''}`}>
             <button className="btn-gradient inline-block rounded-full px-8 py-3.5 font-bold" disabled={sold} onClick={() => add(p, qty)}>{sold ? 'Sold out' : 'Add to cart'}</button>
-            <a href={productWhatsAppUrl(p)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">
+            <a href={productWhatsAppUrl(p)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800 hover:shadow-md">
               <WhatsAppIcon /> {sold ? 'Ask for similar' : 'Order on WhatsApp'}
             </a>
           </div>

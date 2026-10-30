@@ -38,7 +38,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 py-8 sm:grid-cols-2 sm:py-10 lg:grid-cols-4 lg:gap-8">
           <div>
             <Logo size="sm" light className="mb-4" />
-            <h4 className="mb-2 text-sm uppercase text-sky-200">About {store.name}</h4>
+            <h3 className="mb-2 text-sm uppercase text-sky-200">About {store.name}</h3>
             <p className="text-sm text-white/65">{store.name} sells computers and accessories in {store.address}. Browse the store or message us on WhatsApp to confirm availability.</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <a href={whatsappUrl(generalEnquiry)} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/15"><WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp</a>
@@ -46,7 +46,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="mb-2.5 text-sm uppercase text-sky-200">Quick links</h4>
+            <h3 className="mb-2.5 text-sm uppercase text-sky-200">Quick links</h3>
             <div className="flex flex-col gap-1">
               <Link to="/collections/all" className="w-fit text-white/65 transition hover:translate-x-1 hover:text-white">All products</Link>
               <Link to="/delivery" className="w-fit text-white/65 transition hover:translate-x-1 hover:text-white">Delivery</Link>
@@ -56,7 +56,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="mb-2.5 text-sm uppercase text-sky-200">Get in touch</h4>
+            <h3 className="mb-2.5 text-sm uppercase text-sky-200">Get in touch</h3>
             <div className="space-y-2 text-sm">
               <a href={store.mapLink} target="_blank" rel="noopener noreferrer" className="block text-white/65 transition hover:text-white">{store.address}</a>
               <a href={`tel:${store.phone.replace(/[^\d+]/g, '')}`} className="block text-white/65 transition hover:text-white">{store.phone}</a>
@@ -67,7 +67,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="mb-2.5 text-sm uppercase text-sky-200">Store updates</h4>
+            <h3 className="mb-2.5 text-sm uppercase text-sky-200">Store updates</h3>
             <p className="mb-3 text-sm text-white/65">Sign up with your email address to receive store updates.</p>
             <input placeholder="Your email" className="mb-2.5 w-full rounded-xl border border-white/15 bg-white/10 p-3 text-white placeholder:text-white/45 focus:border-sky-300" />
             <button className="btn-gradient inline-block rounded-full px-6 py-3 font-semibold">Subscribe</button>

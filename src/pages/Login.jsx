@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -12,6 +13,7 @@ export default function Login() {
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+      <Seo title="Login" description="Access your Billionaire's Computers account." path="/login" robots="noindex,nofollow" />
       <div className="relative mx-auto max-w-[500px]">
         <div aria-hidden="true" className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/20 via-violet/20 to-sun/20 blur-2xl" />
         <div className="panel-gradient relative overflow-hidden rounded-3xl border border-line p-6 shadow-2xl backdrop-blur sm:p-8 lg:p-10">

@@ -4,6 +4,7 @@ import { cats } from '../data'
 import { useProducts } from '../context/ProductsContext'
 import Art from '../components/Art'
 import { catName, money, stockLabel } from '../utils'
+import Seo from '../components/Seo'
 
 const emptyForm = {
   name: '',
@@ -154,6 +155,7 @@ export default function Admin() {
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-10 pb-12 sm:px-6 sm:pb-[60px] lg:px-8">
+      <Seo title="Store admin" description="Manage uploaded products." path="/admin" robots="noindex,nofollow" />
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
           <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/70 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-primary shadow-sm dark:border-primary/30">
@@ -250,7 +252,7 @@ export default function Admin() {
           </label>
           <div>
             <span className="mb-1.5 block text-sm font-semibold text-ink">Product image (optional)</span>
-            <input ref={fileRef} type="file" accept="image/*" onChange={handleImage} className="block w-full rounded-xl border border-line bg-surface p-2.5 text-sm file:mr-3 file:rounded-full file:border-0 file:bg-primary-soft file:px-3 file:py-1.5 file:font-semibold file:text-primary" />
+            <input ref={fileRef} type="file" accept="image/*" aria-label="Product image (optional)" onChange={handleImage} className="block w-full rounded-xl border border-line bg-surface p-2.5 text-sm file:mr-3 file:rounded-full file:border-0 file:bg-primary-soft file:px-3 file:py-1.5 file:font-semibold file:text-primary" />
             <p className="mt-1 text-xs text-text">{imageBusy ? 'Preparing image…' : 'Images are resized and saved in this browser.'}</p>
           </div>
         </div>

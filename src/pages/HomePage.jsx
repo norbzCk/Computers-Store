@@ -3,6 +3,7 @@ import { cats, store } from '../data'
 import Art from '../components/Art'
 import Card from '../components/Card'
 import WhatsAppIcon from '../components/WhatsAppIcon'
+import Seo from '../components/Seo'
 import { useProducts } from '../context/ProductsContext'
 import { isInStock, isSold, money, whatsappUrl } from '../utils'
 
@@ -28,6 +29,34 @@ export default function HomePage() {
   const fresh = products.filter((p) => isInStock(p) && !p.featured).slice(0, 8)
   const instaProducts = products.filter(isInStock).slice(0, 4)
   const testimonials = store.testimonials || []
+  const seoJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${store.url}/#website`,
+        url: store.url,
+        name: store.name,
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${store.url}/collections/all?q={search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'ComputerStore',
+        '@id': `${store.url}/#store`,
+        name: store.name,
+        url: store.url,
+        telephone: store.phone,
+        email: store.email,
+        image: `${store.url}${encodeURI("/Billionaire's computers logo.png")}`,
+        address: { '@type': 'PostalAddress', streetAddress: store.address, addressLocality: 'Dar es Salaam', addressCountry: 'TZ' },
+        sameAs: [store.instagramUrl],
+        hasMap: store.mapLink,
+      },
+    ],
+  }
   const instagramHandle = store.instagramUrl.replace(/\/+$/, '').split('/').pop()
   const trustItems = [
     { type: 'warranty', title: 'Warranty details', text: 'Shown on each product page where available.' },
@@ -37,6 +66,7 @@ export default function HomePage() {
   ]
   return (
     <div className="max-w-[1280px] mx-auto px-2 sm:px-6 lg:px-8 pt-6 sm:pt-8 lg:pt-10">
+      <Seo description={`${store.name} sells laptops, desktops, Macbooks, printers, toners and accessories in ${store.address}.`} jsonLd={seoJsonLd} />
       <section className="hero-panel relative overflow-hidden rounded-3xl border border-white/70 dark:border-white/10 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0 p-6 sm:p-10 md:p-12 lg:p-14 xl:p-16 mb-8 sm:mb-10 lg:mb-12">
         <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-violet/20 blur-3xl" />
         <div aria-hidden="true" className="pointer-events-none absolute -bottom-28 -left-20 h-64 w-64 rounded-full bg-sun/20 blur-3xl" />
@@ -49,7 +79,7 @@ export default function HomePage() {
           <p className="max-w-[460px] text-base sm:text-lg mb-6">Laptops, desktops, Macbooks, printers and more, with warranty details shown on each product.</p>
           <div className="flex flex-wrap gap-3">
             <Link className="btn-gradient inline-block rounded-full px-7 py-3.5 font-bold" to="/collections/laptops">Shop laptops</Link>
-            <a className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-6 py-3.5 font-bold text-primary shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary-soft" href={whatsappUrl(`Hello ${store.name}, I'd like to ask about a product.`)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon className="h-5 w-5 text-emerald-600" /> WhatsApp</a>
+            <a className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-6 py-3.5 font-bold text-primary shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary-soft" href={whatsappUrl(`Hello ${store.name}, I'd like to ask about a product.`)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon className="h-5 w-5 text-emerald-700" /> WhatsApp</a>
           </div>
         </div>
         <div className="float-soft relative max-w-[380px] mx-auto w-full"><Art kind="laptops" /></div>
@@ -58,7 +88,7 @@ export default function HomePage() {
       <section aria-label="Why shop with us" className="mb-8 grid grid-cols-1 gap-3 sm:mb-10 sm:grid-cols-2 lg:mb-12 lg:grid-cols-4">
         {trustItems.map((item, index) => (
           <div key={item.title} className="panel-gradient flex items-start gap-3 rounded-2xl border border-line p-4 shadow-sm">
-            <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${['bg-primary-soft text-primary', 'bg-violet/10 text-violet', 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300', 'bg-sky/10 text-sky'][index]}`}><TrustIcon type={item.type} /></span>
+            <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${['bg-primary-soft text-primary', 'bg-violet/10 text-violet', 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300', 'bg-sky/10 text-sky'][index]}`}><TrustIcon type={item.type} /></span>
             <div>
               <p className="text-sm font-bold text-ink">{item.title}</p>
               <p className="mt-0.5 text-xs leading-5 text-text">{item.text}</p>
@@ -91,7 +121,7 @@ export default function HomePage() {
             {featured.map((p) => (
               <Link key={p.slug} to={`/products/${p.slug}`} className="card-gradient group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-line p-4 transition duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg sm:flex-row sm:items-center sm:p-5">
                 <span className="absolute top-3 right-4 rounded-full bg-gradient-to-r from-primary to-violet px-3 py-0.5 text-xs font-bold text-white">Featured</span>
-                <div className="art-stage grid aspect-[4/3] w-full place-items-center rounded-xl p-3 sm:w-[220px] sm:flex-none">{p.images?.[0] ? <img src={p.images[0]} alt={p.name} loading="lazy" className="h-full w-full rounded-lg object-contain" /> : <Art kind={p.category} />}</div>
+                <div className="art-stage grid aspect-[4/3] w-full place-items-center rounded-xl p-3 sm:w-[220px] sm:flex-none">{p.images?.[0] ? <img src={p.images[0]} alt={p.name} loading="lazy" decoding="async" className="h-full w-full rounded-lg object-contain" /> : <Art kind={p.category} />}</div>
                 <div className="flex-1">
                   <p className="text-[11px] font-bold uppercase tracking-wide text-primary">{p.brand}</p>
                   <h3 className="mt-1 text-sm font-medium uppercase text-ink transition-colors group-hover:text-primary sm:text-base">{p.name}</h3>
@@ -134,7 +164,7 @@ export default function HomePage() {
           <div className="panel-gradient rounded-2xl border border-line p-6 text-center shadow-sm sm:p-8">
             <p className="font-bold text-ink">We only publish feedback from real customers.</p>
             <p className="mx-auto mt-1 max-w-xl text-sm text-text">Verified customer reviews will appear here once they are available. In the meantime, ask us anything about a product on WhatsApp.</p>
-            <a href={whatsappUrl(`Hello ${store.name}, I'd like to ask about a product.`)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700"><WhatsAppIcon className="h-4 w-4" /> Ask on WhatsApp</a>
+            <a href={whatsappUrl(`Hello ${store.name}, I'd like to ask about a product.`)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800"><WhatsAppIcon className="h-4 w-4" /> Ask on WhatsApp</a>
           </div>
         )}
       </section>
@@ -151,7 +181,7 @@ export default function HomePage() {
         <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
           {instaProducts.map((p, index) => (
             <a key={p.slug} href={store.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${p.name} highlights on Instagram`} className="art-stage group relative grid aspect-square place-items-center overflow-hidden rounded-2xl border border-line p-4 transition duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg">
-              {p.images?.[0] ? <img src={p.images[0]} alt={p.name} loading="lazy" className="h-full w-full rounded-xl object-contain" /> : <Art kind={p.category} tone={index % 3} />}
+              {p.images?.[0] ? <img src={p.images[0]} alt={p.name} loading="lazy" decoding="async" className="h-full w-full rounded-xl object-contain" /> : <Art kind={p.category} tone={index % 3} />}
               <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent px-3 pt-6 pb-2 text-left text-[11px] font-bold uppercase tracking-wide text-white opacity-0 transition group-hover:opacity-100">Product highlight</span>
             </a>
           ))}

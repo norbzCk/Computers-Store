@@ -1,4 +1,6 @@
-import logo from '../assets/Billionaire\'s computers logo.png'
+import logo130 from '../assets/logo-130.webp'
+import logo260 from '../assets/logo-260.webp'
+import logo520 from '../assets/logo-520.webp'
 
 const sizes = {
   sm: {
@@ -18,12 +20,28 @@ const sizes = {
   },
 }
 
+const imageSizes = {
+  sm: '54px',
+  md: '(min-width: 1024px) 76px, (min-width: 640px) 65px, 54px',
+  lg: '(min-width: 1024px) 130px, (min-width: 640px) 108px, 87px',
+}
+
 export default function Logo({ size = 'md', className = '', light = false }) {
   const s = sizes[size] || sizes.md
+  const sizesAttr = imageSizes[size] || imageSizes.md
 
   return (
     <span className={`inline-flex items-center gap-2 sm:gap-3 ${className}`.trim()}>
-      <img src={logo} alt="Billionaire's Computers" className={`${s.img} w-auto shrink-0 ${light ? 'rounded-full bg-white/95 p-1 shadow-lg' : ''}`} />
+      <img
+        src={logo520}
+        srcSet={`${logo130} 130w, ${logo260} 260w, ${logo520} 520w`}
+        sizes={sizesAttr}
+        alt="Billionaire's Computers"
+        width="537"
+        height="396"
+        decoding="async"
+        className={`${s.img} w-auto shrink-0 ${light ? 'rounded-full bg-white/95 p-1 shadow-lg' : ''}`}
+      />
       <span className="flex flex-col items-center text-center leading-tight">
         <span className={`font-bold uppercase whitespace-nowrap ${light ? 'text-white' : 'text-navy'} ${s.line1}`}>
           Billionaire's

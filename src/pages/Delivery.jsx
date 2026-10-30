@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom'
 import { store } from '../data'
 import WhatsAppIcon from '../components/WhatsAppIcon'
 import { whatsappUrl } from '../utils'
+import Seo from '../components/Seo'
 
 export default function Delivery() {
   const enquiry = `Hello ${store.name}, I'd like to confirm delivery to my area.`
   return (
     <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-[40px] pb-12 sm:pb-[60px]">
+      <Seo title='Delivery in Dar es Salaam' description="Delivery areas, fees and timings for orders from Billionaire's Computers in Dar es Salaam." path='/delivery' jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Delivery in Dar es Salaam', description: "Delivery areas, fees and timings for orders from Billionaire's Computers in Dar es Salaam.", url: `${store.url}/delivery` }} />
       <section className="hero-panel relative overflow-hidden rounded-3xl border border-white/70 p-5 shadow-xl dark:border-white/10 sm:p-[30px]">
         <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-sky/20 blur-3xl" />
         <div aria-hidden="true" className="pointer-events-none absolute -bottom-24 -left-16 h-56 w-56 rounded-full bg-emerald-500/20 blur-3xl" />
@@ -18,7 +20,7 @@ export default function Delivery() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl text-gradient mb-3">Delivery in Dar es Salaam</h1>
           <p className="max-w-2xl text-text sm:text-lg">{store.deliveryInfo.summary} {store.deliveryInfo.freeDeliveryNote}</p>
           <div className="mt-6 flex flex-wrap gap-1.5 sm:gap-2.5">
-            <a href={whatsappUrl(enquiry)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 sm:px-6 sm:py-3.5 sm:text-base"><WhatsAppIcon className="h-5 w-5" /> Confirm on WhatsApp</a>
+            <a href={whatsappUrl(enquiry)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800 sm:px-6 sm:py-3.5 sm:text-base"><WhatsAppIcon className="h-5 w-5" /> Confirm on WhatsApp</a>
             <a href={store.mapLink} target="_blank" rel="noopener noreferrer" className="rounded-full border border-line bg-surface px-5 py-3 text-sm font-bold text-primary shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary-soft sm:px-6 sm:py-3.5 sm:text-base">View location</a>
             <Link to="/contact" className="rounded-full border border-line bg-surface px-5 py-3 text-sm font-bold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary sm:px-6 sm:py-3.5 sm:text-base">Contact us</Link>
           </div>
@@ -70,9 +72,9 @@ export default function Delivery() {
               <div><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">Visit us</p><a href={store.mapLink} target="_blank" rel="noopener noreferrer" className="font-semibold text-ink hover:text-primary hover:underline">{store.address}</a></div>
               <div><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-violet">Call</p><a href={`tel:${store.phone.replace(/[^\d+]/g, '')}`} className="font-semibold text-ink hover:text-primary hover:underline">{store.phone}</a></div>
               <div><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sky">Email</p><a href={`mailto:${store.email}`} className="font-semibold text-ink hover:text-primary hover:underline">{store.email}</a></div>
-              <div><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-300">Opening hours</p>{store.openingHours.map((hours) => <p key={hours} className="text-text">{hours}</p>)}</div>
+              <div><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">Opening hours</p>{store.openingHours.map((hours) => <p key={hours} className="text-text">{hours}</p>)}</div>
             </div>
-            <a href={whatsappUrl(enquiry)} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700"><WhatsAppIcon className="h-4 w-4" /> Chat on WhatsApp</a>
+            <a href={whatsappUrl(enquiry)} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800"><WhatsAppIcon className="h-4 w-4" /> Chat on WhatsApp</a>
           </section>
         </aside>
       </div>

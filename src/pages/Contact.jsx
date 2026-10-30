@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { store } from '../data'
 import WhatsAppIcon from '../components/WhatsAppIcon'
 import { whatsappUrl } from '../utils'
+import Seo from '../components/Seo'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -17,6 +18,7 @@ export default function Contact() {
   }
   return (
     <div className="max-w-[1100px] mx-auto px-4 sm:px-5 py-10 sm:py-[40px] pb-12 sm:pb-[60px]">
+      <Seo title='Contact us' description="Contact Billionaire's Computers in Sinza Makaburini, Dar es Salaam by WhatsApp, phone, email or visit the shop." path='/contact' jsonLd={{ '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Contact us', description: "Contact Billionaire's Computers in Sinza Makaburini, Dar es Salaam by WhatsApp, phone, email or visit the shop.", url: `${store.url}/contact` }} />
       <div className="panel-gradient relative overflow-hidden rounded-3xl border border-line shadow-xl">
         <div className="p-5 sm:p-10">
           <div className="text-center">
@@ -27,7 +29,7 @@ export default function Contact() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl text-gradient mb-2">Contact Us</h1>
             <p className="mx-auto max-w-xl text-text">Questions about a product, delivery or payment? Message us on WhatsApp, call, email or visit the shop.</p>
             <div className="mt-5 flex flex-wrap justify-center gap-1.5 sm:gap-2.5">
-              <a href={whatsappUrl(`Hello ${store.name}, I'd like to ask about a product.`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700"><WhatsAppIcon className="h-4 w-4" /> WhatsApp</a>
+              <a href={whatsappUrl(`Hello ${store.name}, I'd like to ask about a product.`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800"><WhatsAppIcon className="h-4 w-4" /> WhatsApp</a>
               <a href={`tel:${store.phone.replace(/[^\d+]/g, '')}`} className="rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-bold text-primary shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary-soft">Call {store.phone}</a>
               <a href={`mailto:${store.email}`} className="rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-bold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary">Email us</a>
             </div>
@@ -48,7 +50,7 @@ export default function Contact() {
               {store.openingHours.map((hours) => <p key={hours} className="mt-1 text-sm text-ink">{hours}</p>)}
             </div>
             <div className="rounded-2xl border border-line bg-surface/80 p-4 text-left shadow-sm">
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-300">Delivery</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">Delivery</p>
               <p className="mt-1 text-sm text-ink">{store.deliveryInfo.summary}</p>
               <Link to="/delivery" className="mt-2 inline-block text-xs font-bold text-primary hover:underline">Delivery details</Link>
             </div>

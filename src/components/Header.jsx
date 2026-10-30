@@ -39,12 +39,12 @@ export default function Header() {
       <div className="sticky top-0 z-20">
         <div className="border-b border-line bg-gradient-to-r from-surface via-primary-soft/30 to-surface">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap lg:flex-nowrap items-center gap-4 lg:gap-7 xl:gap-9 py-3 sm:py-[14px]">
-            <Link to="/" aria-label="Billionaire's Computers home">
+            <Link to="/">
               <Logo />
             </Link>
             <form className="order-3 flex w-full flex-1 overflow-hidden rounded-full border border-line bg-surface shadow-sm transition focus-within:ring-2 focus-within:ring-primary/20 lg:order-none lg:w-auto" onSubmit={go}>
               <input placeholder="Search..." value={q} onChange={(e) => setQ(e.target.value)} className="flex-1 border-0 px-3 sm:px-[14px] py-2.5 sm:py-3 outline-0 min-w-0" />
-              <select value={cat} onChange={(e) => setCat(e.target.value)} className="border-0 border-l border-line px-2 sm:px-[10px] bg-surface text-text"><option value="all">All categories</option>{cats.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}</select>
+              <select aria-label="Search category" value={cat} onChange={(e) => setCat(e.target.value)} className="border-0 border-l border-line px-2 sm:px-[10px] bg-surface text-text"><option value="all">All categories</option>{cats.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}</select>
               <button aria-label="Search" className="bg-primary text-white border-0 w-[50px] cursor-pointer text-lg hover:bg-primary-hover">⌕</button>
             </form>
             <div className="hidden sm:block text-sm leading-[1.3]"><small className="block text-[#7c8cf0]">Language</small><span className="font-medium text-base">English</span></div>

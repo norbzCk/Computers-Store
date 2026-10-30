@@ -13,12 +13,13 @@ export const store = {
   deliveryInfo: {
     summary: 'Free delivery to selected locations in Dar es Salaam.',
     freeDeliveryNote: 'Free delivery applies to selected locations only. Confirm your area on WhatsApp before ordering.',
+    // TODO: Owner to confirm delivery fees and estimated times before publishing.
     zones: [
       { name: 'Selected Dar es Salaam locations', fee: 'Free', estimatedTime: 'Same day or next day' },
-      { name: 'Other Dar es Salaam areas', fee: 'Owner to confirm', estimatedTime: 'Owner to confirm' },
-      { name: 'Outside Dar es Salaam', fee: 'Quoted on request', estimatedTime: 'Owner to confirm' },
+      { name: 'Other Dar es Salaam areas', fee: 'Confirm on WhatsApp', estimatedTime: 'Confirm on WhatsApp' },
+      { name: 'Outside Dar es Salaam', fee: 'Quoted on request', estimatedTime: 'Confirm on WhatsApp' },
     ],
-    notes: ['Placeholder delivery fees and timings. Owner to confirm before publishing.'],
+    notes: ['Delivery fees and times are confirmed on WhatsApp before you order.'],
   },
   // TODO: Owner to add real, verified customer testimonials. Leave empty until reviews are available.
   testimonials: [],

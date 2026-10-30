@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage'
 import Collection from './pages/Collection'
 import Product from './pages/Product'
 import Contact from './pages/Contact'
+import Delivery from './pages/Delivery'
 import About from './pages/About'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/collections/:slug" element={<Collection />} />
             <Route path="/products/:slug" element={<Product />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/delivery" element={<Delivery />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

@@ -61,6 +61,7 @@ export default function Header() {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex gap-6 xl:gap-8 items-center min-h-[64px] overflow-x-auto">
             <NavLink to="/" end className={({isActive}) => isActive ? 'text-primary font-medium whitespace-nowrap' : 'text-ink font-medium hover:text-primary whitespace-nowrap'}>Home</NavLink>
             <NavLink to="/about" className={({isActive}) => isActive ? 'text-primary font-medium whitespace-nowrap' : 'text-ink font-medium hover:text-primary whitespace-nowrap'}>About</NavLink>
+            <NavLink to="/delivery" className={({isActive}) => isActive ? 'text-primary font-medium whitespace-nowrap' : 'text-ink font-medium hover:text-primary whitespace-nowrap'}>Delivery</NavLink>
             {main.map((s) => <NavLink key={s} to={`/collections/${s}`} className={({isActive}) => isActive ? 'text-primary font-medium whitespace-nowrap' : 'text-ink font-medium hover:text-primary whitespace-nowrap'}>{catName(s)}</NavLink>)}
             <div className="relative group">
               <span className="text-ink font-medium cursor-pointer hover:text-primary whitespace-nowrap">More Categories ▾</span>

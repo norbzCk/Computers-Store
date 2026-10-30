@@ -1,4 +1,4 @@
-import { cats } from './data'
+import { cats, store } from './data'
 
 export const money = (n) => `Tsh ${Number(n || 0).toLocaleString('en-US')}`
 
@@ -30,3 +30,17 @@ export const specEntries = (p) => specFields
   .filter(([, value]) => value)
 
 export const specNotes = (p) => (p.specs?.notes || []).filter(Boolean)
+
+export const productPath = (p) => `/products/${p.slug}`
+
+export const productUrl = (p) => `${typeof window === 'undefined' ? store.url : window.location.origin}${productPath(p)}`
+
+export const whatsappUrl = (message) => `https://wa.me/${String(store.whatsappNumber).replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
+
+export const productWhatsAppMessage = (p) => {
+  const intro = `Hello ${store.name}, I'm interested in ${p.name} (${money(p.price)}).`
+  const tail = isSold(p) ? ' It shows as sold. Do you have a similar product available?' : ' Is it available?'
+  return `${intro}${tail} ${productUrl(p)}`
+}
+
+export const productWhatsAppUrl = (p) => whatsappUrl(productWhatsAppMessage(p))

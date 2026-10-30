@@ -5,6 +5,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Drawer from './components/Drawer'
+import FloatingWhatsApp from './components/FloatingWhatsApp'
 import HomePage from './pages/HomePage'
 import Collection from './pages/Collection'
 import Product from './pages/Product'
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="*" element={<Collection />} />
           </Routes>
           <Footer />
+          <FloatingWhatsApp />
           <Drawer />
         </CartProvider>
       </ProductsProvider>

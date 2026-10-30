@@ -4,7 +4,8 @@ import { store } from '../data'
 import { useCart } from '../context/CartContext'
 import Art from '../components/Art'
 import Card from '../components/Card'
-import { catName, isSold, money, specEntries, specNotes } from '../utils'
+import WhatsAppIcon from '../components/WhatsAppIcon'
+import { catName, isSold, money, productWhatsAppUrl, specEntries, specNotes } from '../utils'
 import { useProducts } from '../context/ProductsContext'
 
 export default function Product() {
@@ -46,7 +47,12 @@ export default function Product() {
           <div className="text-xs uppercase border-b border-line pb-4 mb-4">{store.name}</div>
           <div className="text-2xl font-bold sm:text-[28px]"><span className="price-gradient">{money(p.price)}</span>{p.oldPrice && <s className="ml-2.5 text-lg text-slate-400 dark:text-white/45">{money(p.oldPrice)}</s>}</div>
           <div className="flex gap-4 items-center my-5"><b>Quantity:</b><select value={qty} onChange={(e) => setQty(+e.target.value)} className="rounded-xl border border-line bg-surface px-3 py-2.5 shadow-sm sm:px-4 sm:py-3">{[1, 2, 3, 4, 5].map((n) => <option key={n}>{n}</option>)}</select></div>
-          <button className="btn-gradient inline-block rounded-full px-8 py-3.5 font-bold" disabled={sold} onClick={() => add(p, qty)}>{sold ? 'Sold out' : 'Add to cart'}</button>
+          <div className="flex flex-wrap gap-3">
+            <button className="btn-gradient inline-block rounded-full px-8 py-3.5 font-bold" disabled={sold} onClick={() => add(p, qty)}>{sold ? 'Sold out' : 'Add to cart'}</button>
+            <a href={productWhatsAppUrl(p)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">
+              <WhatsAppIcon /> {sold ? 'Ask for similar' : 'Order on WhatsApp'}
+            </a>
+          </div>
           <div className="mt-5 grid grid-cols-3 gap-2 text-center text-[10px] font-bold uppercase tracking-wide sm:text-[11px]">
             <div className="rounded-xl border border-line bg-surface/80 px-2 py-2 text-primary">Warranty</div>
             <div className="rounded-xl border border-line bg-surface/80 px-2 py-2 text-violet">Free delivery</div>

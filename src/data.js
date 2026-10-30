@@ -20,6 +20,8 @@ export const store = {
     ],
     notes: ['Placeholder delivery fees and timings. Owner to confirm before publishing.'],
   },
+  // TODO: Owner to add real, verified customer testimonials. Leave empty until reviews are available.
+  testimonials: [],
 }
 
 export const cats = [

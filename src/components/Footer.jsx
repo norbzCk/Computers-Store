@@ -2,23 +2,21 @@ import { Link } from 'react-router-dom'
 import { site } from '../data'
 import Logo from './Logo'
 
-const featureBars = [
-  'bg-gradient-to-r from-sky-400 to-cyan-300',
-  'bg-gradient-to-r from-emerald-400 to-teal-300',
-  'bg-gradient-to-r from-violet-400 to-fuchsia-300',
-  'bg-gradient-to-r from-amber-300 to-orange-400',
+const featureTones = [
+  'from-sky-500/25 via-sky-400/10 to-transparent',
+  'from-emerald-500/25 via-emerald-400/10 to-transparent',
+  'from-violet-500/25 via-violet-400/10 to-transparent',
+  'from-amber-500/25 via-orange-400/10 to-transparent',
 ]
 
 export default function Footer() {
   return (
     <footer className="footer-gradient relative mt-10 overflow-hidden pb-8 text-white/80 sm:mt-12 lg:mt-16">
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-violet to-sun" />
       <div className="pointer-events-none absolute -right-20 top-10 h-72 w-72 rounded-full bg-sky/10 blur-3xl" />
       <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-4 border-b border-white/10 py-8 sm:grid-cols-2 sm:py-10 lg:grid-cols-4 lg:gap-6">
           {[['Free delivery in Dar es Salaam', 'Available to selected areas'], ['Hassle free shopping', 'Get the best deals guaranteed'], ['Top-notch support', 'Get in touch to discuss your requirements'], ['Secure payments', 'Mobile money or cash on delivery']].map(([a, b], i) => (
-            <div key={a} className="group rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.1]">
-              <span className={`mb-3 block h-1.5 w-10 rounded-full ${featureBars[i % featureBars.length]}`} />
+            <div key={a} className={`group rounded-2xl border border-white/10 bg-gradient-to-br ${featureTones[i % featureTones.length]} p-4 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:from-white/15`}>
               <b className="block bg-gradient-to-r from-white to-sky-200 bg-clip-text text-transparent">{a}</b>
               <span className="text-sm text-white/60">{b}</span>
             </div>
@@ -36,6 +34,7 @@ export default function Footer() {
               <Link to="/collections/all" className="w-fit text-white/65 transition hover:translate-x-1 hover:text-white">Search</Link>
               <Link to="/contact" className="w-fit text-white/65 transition hover:translate-x-1 hover:text-white">Contact Us</Link>
               <Link to="/about" className="w-fit text-white/65 transition hover:translate-x-1 hover:text-white">About</Link>
+              <Link to="/admin" className="w-fit text-white/65 transition hover:translate-x-1 hover:text-white">Admin upload</Link>
             </div>
           </div>
           <div>

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #1f4fe0;
   --color-primary-hover: #1a42bd;
@@ -17,6 +19,7 @@
   --color-ink: #46535b;
   --color-text: #677279;
   --color-bg: #f7f5ef;
+  --color-surface: #ffffff;
   --color-line: #e4e8ea;
   --color-green: #0a8a0a;
   --color-top: #5b5b5b;
@@ -206,9 +209,23 @@ input[type="checkbox"] {
 .panel-gradient {
   background-color: #fff;
   background-image:
-    radial-gradient(circle at 0% 0%, rgb(31 79 224 / 0.08), transparent 35%),
-    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.07), transparent 35%),
-    linear-gradient(135deg, #fff 0%, #fbfdff 100%);
+    radial-gradient(circle at 0% 0%, rgb(31 79 224 / 0.16), transparent 42%),
+    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.13), transparent 42%),
+    radial-gradient(circle at 78% 100%, rgb(245 158 11 / 0.1), transparent 46%),
+    linear-gradient(135deg, #fff 0%, #eef4ff 54%, #fff8ec 100%);
+}
+
+.card-gradient {
+  background-color: #fff;
+  background-image:
+    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.07), transparent 42%),
+    linear-gradient(145deg, #fff 0%, #f7faff 48%, #fff7ec 100%);
+}
+
+.card-gradient:hover {
+  background-image:
+    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.12), transparent 44%),
+    linear-gradient(145deg, #fff 0%, #edf3ff 45%, #fff1de 100%);
 }
 
 .hero-panel {
@@ -253,4 +270,114 @@ nav a[aria-current="page"]::after {
   .btn-gradient {
     transition: none;
   }
+}
+
+.dark {
+  color-scheme: dark;
+  --color-bg: #081120;
+  --color-surface: #101b2d;
+  --color-ink: #e7eef8;
+  --color-text: #9fb0c7;
+  --color-line: #26364d;
+  --color-primary-soft: #18284a;
+  --color-navy: #e7eef8;
+  --color-danger: #f87171;
+  --color-error: #fca5a5;
+  --color-green: #4ade80;
+  --color-top: #9ca3af;
+}
+
+.dark body {
+  background-image:
+    radial-gradient(circle at 12% 0%, rgb(31 79 224 / 0.22), transparent 38%),
+    radial-gradient(circle at 88% 6%, rgb(124 58 237 / 0.18), transparent 36%),
+    radial-gradient(circle at 50% 100%, rgb(245 158 11 / 0.08), transparent 42%);
+}
+
+.dark .text-primary {
+  color: #8fb0ff;
+}
+
+.dark .text-violet {
+  color: #c4b5fd;
+}
+
+.dark .text-sky {
+  color: #7dd3fc;
+}
+
+.dark .text-mint {
+  color: #6ee7b7;
+}
+
+.dark .text-gradient {
+  background-image: linear-gradient(100deg, #8fb0ff 0%, #c4b5fd 38%, #7dd3fc 68%, #fbbf24 100%);
+}
+
+.dark .price-gradient {
+  background-image: linear-gradient(100deg, #8fb0ff, #c4b5fd);
+}
+
+.dark .art-stage {
+  background-color: #0d1728;
+  background-image:
+    radial-gradient(circle at 50% 45%, rgb(31 79 224 / 0.16), transparent 65%),
+    linear-gradient(135deg, #101b2d 0%, #0d1728 55%, #1a150e 100%);
+}
+
+.dark .panel-gradient {
+  background-color: #0d1728;
+  background-image:
+    radial-gradient(circle at 0% 0%, rgb(31 79 224 / 0.22), transparent 42%),
+    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.18), transparent 42%),
+    radial-gradient(circle at 78% 100%, rgb(245 158 11 / 0.08), transparent 46%),
+    linear-gradient(135deg, #0d1728 0%, #101d33 54%, #1b150c 100%);
+}
+
+.dark .card-gradient {
+  background-color: #0f1a2c;
+  background-image:
+    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.1), transparent 42%),
+    linear-gradient(145deg, #101b2d 0%, #0d1728 48%, #1a150e 100%);
+}
+
+.dark .card-gradient:hover {
+  background-image:
+    radial-gradient(circle at 100% 0%, rgb(124 58 237 / 0.18), transparent 44%),
+    linear-gradient(145deg, #13213a 0%, #101b2d 45%, #221a0e 100%);
+}
+
+.dark .hero-panel {
+  background-color: #0b1526;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgb(31 79 224 / 0.28), transparent 38%),
+    radial-gradient(circle at 88% 12%, rgb(124 58 237 / 0.24), transparent 40%),
+    radial-gradient(circle at 72% 100%, rgb(245 158 11 / 0.12), transparent 42%),
+    linear-gradient(135deg, #0b1526 0%, #101f3a 46%, #20180a 100%);
+  box-shadow: 0 30px 70px -45px rgb(0 0 0 / 0.9);
+}
+
+.dark .footer-gradient {
+  background-color: #050b16;
+  background-image:
+    radial-gradient(circle at 12% 0%, rgb(31 79 224 / 0.34), transparent 42%),
+    radial-gradient(circle at 88% 15%, rgb(124 58 237 / 0.28), transparent 45%),
+    linear-gradient(135deg, #050b16 0%, #081629 48%, #150e32 100%);
+}
+
+.dark nav a[aria-current="page"] {
+  color: #8fb0ff;
+}
+
+.dark :focus-visible {
+  outline-color: #8fb0ff;
+}
+
+.dark input[type="checkbox"] {
+  accent-color: #8fb0ff;
+}
+
+.dark .delivery-bar .text-primary,
+.dark .logo-on-light .text-primary {
+  color: var(--color-primary);
 }

@@ -25,32 +25,31 @@ export default function Signup() {
     <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
       <div className="relative mx-auto max-w-[600px]">
         <div aria-hidden="true" className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/20 via-violet/20 to-sun/20 blur-2xl" />
-        <div className="relative overflow-hidden rounded-3xl border border-line bg-white/95 p-6 shadow-2xl backdrop-blur sm:p-8 lg:p-10">
-          <div className="mb-5 h-1 w-16 rounded-full bg-gradient-to-r from-primary via-violet to-sun" />
+        <div className="panel-gradient relative overflow-hidden rounded-3xl border border-line p-6 shadow-2xl backdrop-blur sm:p-8 lg:p-10">
           <h1 className="text-2xl sm:text-3xl text-gradient mb-2">Create Account</h1>
           <p className="mb-6 text-text">Sign up to get started</p>
           <form onSubmit={handleSubmit} className="grid gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="mb-1 block text-sm text-ink">First Name</label>
-                <input required value={form.firstName} onChange={update('firstName')} className="w-full rounded-xl border border-line bg-white p-3 focus:border-primary" />
+                <input required value={form.firstName} onChange={update('firstName')} className="w-full rounded-xl border border-line bg-surface p-3 focus:border-primary" />
               </div>
               <div>
                 <label className="mb-1 block text-sm text-ink">Last Name</label>
-                <input required value={form.lastName} onChange={update('lastName')} className="w-full rounded-xl border border-line bg-white p-3 focus:border-primary" />
+                <input required value={form.lastName} onChange={update('lastName')} className="w-full rounded-xl border border-line bg-surface p-3 focus:border-primary" />
               </div>
             </div>
             <div>
               <label className="mb-1 block text-sm text-ink">Email</label>
-              <input required type="email" value={form.email} onChange={update('email')} className="w-full rounded-xl border border-line bg-white p-3 focus:border-primary" />
+              <input required type="email" value={form.email} onChange={update('email')} className="w-full rounded-xl border border-line bg-surface p-3 focus:border-primary" />
             </div>
             <div>
               <label className="mb-1 block text-sm text-ink">Password</label>
-              <input required type="password" value={form.password} onChange={update('password')} className="w-full rounded-xl border border-line bg-white p-3 focus:border-primary" />
+              <input required type="password" value={form.password} onChange={update('password')} className="w-full rounded-xl border border-line bg-surface p-3 focus:border-primary" />
             </div>
             <div>
               <label className="mb-1 block text-sm text-ink">Confirm Password</label>
-              <input required type="password" value={form.confirmPassword} onChange={update('confirmPassword')} className="w-full rounded-xl border border-line bg-white p-3 focus:border-primary" />
+              <input required type="password" value={form.confirmPassword} onChange={update('confirmPassword')} className="w-full rounded-xl border border-line bg-surface p-3 focus:border-primary" />
             </div>
             <button type="submit" className="btn-gradient w-full rounded-full px-6 py-3.5 font-bold">Sign Up</button>
           </form>

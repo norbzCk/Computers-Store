@@ -4,6 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1F4FE0" />
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme')
+          const dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          if (dark) document.documentElement.classList.add('dark')
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+          const meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.content = dark ? '#081120' : '#1F4FE0'
+        } catch {}
+      })()
+    </script>
     <link rel="icon" type="image/png" href="/Billionaire's computers logo.png" />
     <title>Billionaire's Computers</title>
     <meta name="description" content="Billionaire's Computers – laptops, desktops, Macbooks, printers and accessories in Dar es Salaam, Tanzania." />

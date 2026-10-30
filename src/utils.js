@@ -44,3 +44,5 @@ export const productWhatsAppMessage = (p) => {
 }
 
 export const productWhatsAppUrl = (p) => whatsappUrl(productWhatsAppMessage(p))
+
+export const conditionLabel = (condition) => ({ new: 'New', used: 'Used', refurbished: 'Refurbished' }[condition] || '')

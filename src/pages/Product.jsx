@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext'
 import Art from '../components/Art'
 import Card from '../components/Card'
 import WhatsAppIcon from '../components/WhatsAppIcon'
-import { catName, isSold, money, productWhatsAppUrl, specEntries, specNotes } from '../utils'
+import { catName, conditionLabel, isInStock, isSold, money, productWhatsAppUrl, specEntries, specNotes, stockLabel } from '../utils'
 import { useProducts } from '../context/ProductsContext'
 
 export default function Product() {
@@ -14,10 +14,21 @@ export default function Product() {
   const { add } = useCart()
   const [qty, setQty] = useState(1)
   const [tone, setTone] = useState(0)
+  const [activeImage, setActiveImage] = useState(0)
   const p = products.find((x) => x.slug === slug)
   if (!p) return <div className="max-w-[1420px] mx-auto px-4 sm:px-5"><div className="panel-gradient my-6 rounded-2xl border border-line p-6 shadow-sm sm:my-[30px] sm:p-[30px]">Product not found. <Link to="/collections/all" className="font-semibold text-primary hover:text-violet hover:underline">Browse all products</Link></div></div>
   const sold = isSold(p)
-  const image = p.images?.[0]
+  const images = p.images || []
+  const currentImage = images[Math.min(activeImage, Math.max(images.length - 1, 0))]
+  const condition = conditionLabel(p.condition)
+  const stockText = p.stockQty != null ? `${stockLabel(p.stock)} · ${p.stockQty} unit${p.stockQty === 1 ? '' : 's'}` : stockLabel(p.stock)
+  const details = [
+    ...specEntries(p),
+    ...(condition ? [['Condition', condition]] : []),
+    ...(p.warranty ? [['Warranty', p.warranty]] : []),
+    ...(isInStock(p) && p.stockQty != null ? [['Stock', stockText]] : []),
+  ]
+  const notes = specNotes(p)
   const rel = products.filter((x) => x.category === p.category && x.slug !== p.slug).slice(0, 4)
   return (
     <div className="max-w-[1420px] mx-auto px-4 sm:px-5">
@@ -27,27 +38,52 @@ export default function Product() {
           <span className="text-text/50">›</span>
           <Link to={`/collections/${p.category}`} className="font-medium text-primary transition hover:text-violet">{catName(p.category)}</Link>
           <span className="text-text/50">›</span>
-          <span className="font-semibold text-ink">{p.name.slice(0, 40)}…</span>
+          <span className="font-semibold text-ink">{p.name.length > 40 ? `${p.name.slice(0, 40)}…` : p.name}</span>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-6 md:gap-[30px] items-start">
         <div className="panel-gradient relative overflow-hidden rounded-2xl border border-line shadow-sm">
           <div className="p-5 sm:p-[30px]">
-            <div className="art-stage aspect-[4/3] grid place-items-center rounded-2xl p-4 sm:p-8">{image ? <img src={image} alt={p.name} className="h-full w-full rounded-xl object-contain" /> : <Art kind={p.category} tone={tone} />}</div>
-            {!image && (
+            <div className="art-stage relative aspect-[4/3] grid place-items-center rounded-2xl p-4 sm:p-8">
+              {sold && <span className="absolute top-3 right-3 rounded-full bg-slate-500 px-3 py-1 text-xs font-bold text-white dark:bg-slate-600">Sold</span>}
+              {currentImage ? <img src={currentImage} alt={`${p.name}${images.length > 1 ? ` image ${activeImage + 1}` : ''}`} className="h-full w-full rounded-xl object-contain" /> : <Art kind={p.category} tone={tone} />}
+            </div>
+            {images.length > 1 && (
+              <div className="mt-3 flex flex-wrap gap-2 sm:gap-2.5" aria-label="Product image gallery">
+                {images.map((src, index) => (
+                  <button key={`${src.slice(0, 40)}-${index}`} onClick={() => setActiveImage(index)} aria-label={`View image ${index + 1}`} aria-pressed={activeImage === index} className={`grid h-12 w-16 place-items-center overflow-hidden rounded-lg border bg-surface transition duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow ${activeImage === index ? 'border-primary ring-2 ring-primary/20' : 'border-line'}`}>
+                    <img src={src} alt="" className="h-full w-full object-contain" />
+                  </button>
+                ))}
+              </div>
+            )}
+            {images.length === 0 && (
               <div className="mt-3 flex flex-wrap gap-2 sm:gap-2.5">
                 {[0, 1, 2].map((t) => <button key={t} onClick={() => setTone(t)} aria-label={`Image ${t + 1}`} className={`grid h-10 w-14 place-items-center overflow-hidden rounded-lg border bg-surface transition duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow sm:h-12 sm:w-16 ${tone === t ? 'border-primary ring-2 ring-primary/20' : 'border-line'}`}><Art kind={p.category} tone={t} /></button>)}
+              </div>
+            )}
+            {p.videoUrl && (
+              <div className="mt-4 overflow-hidden rounded-xl border border-line bg-black">
+                <video controls playsInline preload="metadata" poster={currentImage || undefined} className="aspect-video w-full">
+                  <source src={p.videoUrl} />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             )}
           </div>
         </div>
         <div className="panel-gradient relative overflow-hidden rounded-2xl border border-line p-5 shadow-lg sm:p-[30px]">
           <h1 className="text-xl sm:text-2xl md:text-[28px] text-gradient mb-3 leading-tight">{p.name}</h1>
-          {p.oldPrice && <span className="badge-sale mb-2.5 inline-block rounded-full px-3 py-1 text-xs font-bold sm:text-sm">Save {money(p.oldPrice - p.price)}</span>}
+          <div className="mb-2.5 flex flex-wrap items-center gap-2">
+            {p.oldPrice && <span className="badge-sale inline-block rounded-full px-3 py-1 text-xs font-bold sm:text-sm">Save {money(p.oldPrice - p.price)}</span>}
+            {condition && <span className="rounded-full border border-line bg-surface/80 px-3 py-1 text-xs font-bold text-ink">{condition}</span>}
+            {isInStock(p) && <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 dark:ring-1 dark:ring-emerald-800/60">{stockText}</span>}
+            {sold && <span className="rounded-full bg-slate-500 px-3 py-1 text-xs font-bold text-white dark:bg-slate-600">Sold</span>}
+          </div>
           <div className="text-xs uppercase border-b border-line pb-4 mb-4">{store.name}</div>
           <div className="text-2xl font-bold sm:text-[28px]"><span className="price-gradient">{money(p.price)}</span>{p.oldPrice && <s className="ml-2.5 text-lg text-slate-400 dark:text-white/45">{money(p.oldPrice)}</s>}</div>
-          <div className="flex gap-4 items-center my-5"><b>Quantity:</b><select value={qty} onChange={(e) => setQty(+e.target.value)} className="rounded-xl border border-line bg-surface px-3 py-2.5 shadow-sm sm:px-4 sm:py-3">{[1, 2, 3, 4, 5].map((n) => <option key={n}>{n}</option>)}</select></div>
-          <div className="flex flex-wrap gap-3">
+          {!sold && <div className="flex gap-4 items-center my-5"><b>Quantity:</b><select value={qty} onChange={(e) => setQty(+e.target.value)} className="rounded-xl border border-line bg-surface px-3 py-2.5 shadow-sm sm:px-4 sm:py-3">{[1, 2, 3, 4, 5].map((n) => <option key={n}>{n}</option>)}</select></div>}
+          <div className={`flex flex-wrap gap-3 ${sold ? 'mt-5' : ''}`}>
             <button className="btn-gradient inline-block rounded-full px-8 py-3.5 font-bold" disabled={sold} onClick={() => add(p, qty)}>{sold ? 'Sold out' : 'Add to cart'}</button>
             <a href={productWhatsAppUrl(p)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">
               <WhatsAppIcon /> {sold ? 'Ask for similar' : 'Order on WhatsApp'}
@@ -62,8 +98,25 @@ export default function Product() {
       </div>
       <div className="panel-gradient relative my-6 overflow-hidden rounded-2xl border border-line shadow-sm sm:my-[30px]">
         <div className="p-5 sm:p-[30px]">
-          <h2 className="text-xl sm:text-2xl text-gradient mb-3">Description</h2>
-          <ul className="list-disc space-y-1 pl-5 marker:text-primary dark:marker:text-sky-300">{[...specEntries(p).map(([label, value]) => `${label}: ${value}`), ...specNotes(p)].map((s) => <li key={s}>{s}</li>)}</ul>
+          <h2 className="text-xl sm:text-2xl text-gradient mb-3">Description and specifications</h2>
+          {p.description && <p className="mb-4 text-text">{p.description}</p>}
+          {details.length > 0 ? (
+            <div className="overflow-hidden rounded-xl border border-line">
+              <table className="w-full text-left text-sm">
+                <tbody className="divide-y divide-line">
+                  {details.map(([label, value]) => (
+                    <tr key={label}>
+                      <th scope="row" className="w-2/5 bg-surface/70 px-4 py-3 font-semibold text-ink sm:w-1/3">{label}</th>
+                      <td className="px-4 py-3 text-text">{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-text">Specifications will be confirmed on request.</p>
+          )}
+          {notes.length > 0 && <ul className="mt-4 list-disc space-y-1 pl-5 marker:text-primary dark:marker:text-sky-300">{notes.map((note) => <li key={note}>{note}</li>)}</ul>}
         </div>
       </div>
       {rel.length > 0 && <>

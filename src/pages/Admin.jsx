@@ -16,6 +16,7 @@ const emptyForm = {
   stockQty: '',
   warranty: '',
   description: '',
+  videoUrl: '',
   featured: false,
   cpu: '',
   ram: '',
@@ -140,7 +141,7 @@ export default function Admin() {
       stock: form.stock,
       stockQty,
       images: form.image ? [form.image] : [],
-      videoUrl: '',
+      videoUrl: form.videoUrl.trim(),
       description: form.description.trim(),
       featured: form.featured,
       custom: true,
@@ -221,6 +222,10 @@ export default function Admin() {
           <label className="sm:col-span-2">
             <span className="mb-1.5 block text-sm font-semibold text-ink">Short description (optional)</span>
             <textarea rows="2" value={form.description} onChange={update('description')} placeholder="Short factual description of the product." className={fieldClass} />
+          </label>
+          <label className="sm:col-span-2">
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Short video URL (optional)</span>
+            <input type="url" value={form.videoUrl} onChange={update('videoUrl')} placeholder="https://example.com/product-video.mp4" className={fieldClass} />
           </label>
           <label className="sm:col-span-2 flex items-center gap-2 text-sm font-semibold text-ink">
             <input type="checkbox" checked={form.featured} onChange={update('featured')} />

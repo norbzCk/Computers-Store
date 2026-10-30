@@ -7,7 +7,7 @@ export default function Card({ p, list }) {
   const sold = isSold(p)
   const image = p.images?.[0]
   const stockText = p.stockQty != null ? `${stockLabel(p.stock)} · ${p.stockQty} unit${p.stockQty === 1 ? '' : 's'}` : stockLabel(p.stock)
-  const actionLabel = sold ? 'Ask for similar' : 'Order on WhatsApp'
+  const actionLabel = sold ? 'Ask for similar' : 'Chat on WhatsApp'
   if (list) {
     return (
       <div className="card-gradient group relative flex flex-col gap-4 overflow-hidden border-b border-line p-4 transition duration-300 sm:flex-row sm:items-center sm:gap-6 sm:p-5">

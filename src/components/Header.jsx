@@ -3,8 +3,9 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { cats, moreCats, store } from '../data'
 import { useCart } from '../context/CartContext'
 import { useTheme } from '../context/ThemeContext'
-import { catName } from '../utils'
+import { catName, whatsappUrl } from '../utils'
 import Logo from './Logo'
+import WhatsAppIcon from './WhatsAppIcon'
 
 function SunIcon() {
   return (
@@ -28,7 +29,8 @@ export default function Header() {
   const { theme, toggle } = useTheme()
   const nav = useNavigate()
   const { pathname } = useLocation()
-  const showDelivery = pathname === '/' || pathname.replace(/\/+$/, '') === '/collections/laptops'
+  const showOrderBar = pathname === '/' || pathname.replace(/\/+$/, '') === '/collections/laptops'
+  const orderEnquiry = `Hello ${store.name}, I'd like to place an order.`
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('all')
   const go = (e) => { e.preventDefault(); nav(`/collections/${cat}?q=${encodeURIComponent(q)}`) }
@@ -73,23 +75,18 @@ export default function Header() {
           </div>
         </nav>
       </div>
-      {showDelivery && (
-        <div aria-label="Free delivery announcement" className="delivery-bar relative overflow-hidden border-y border-white/15 text-white shadow-[0_8px_24px_rgba(15,23,42,0.18)]">
+      {showOrderBar && (
+        <div aria-label="Order now on WhatsApp" className="delivery-bar relative overflow-hidden border-y border-white/15 text-white shadow-[0_8px_24px_rgba(15,23,42,0.18)]">
           <span aria-hidden="true" className="delivery-shine pointer-events-none absolute inset-y-0 w-[35%]" />
           <div className="relative mx-auto flex max-w-[1440px] flex-col items-center justify-center gap-2 px-4 py-2.5 text-center text-sm font-semibold sm:flex-row sm:justify-between sm:gap-4 sm:px-6 sm:py-3 sm:text-[15px] lg:px-8">
             <span className="flex items-center gap-2.5">
               <span className="delivery-icon grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/20 ring-1 ring-white/40">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]" aria-hidden="true">
-                  <path d="M3 6h11v10H3z" />
-                  <path d="M14 9h4l3 3v4h-7z" />
-                  <circle cx="7" cy="18" r="1.6" />
-                  <circle cx="17" cy="18" r="1.6" />
-                </svg>
+                <WhatsAppIcon className="h-[18px] w-[18px]" />
               </span>
-              <span><strong className="font-extrabold tracking-wide">FREE Delivery</strong> to Selected Locations in Dar Es Salaam.</span>
+              <span><strong className="font-extrabold tracking-wide">Order on WhatsApp</strong> — confirm stock, price and delivery with us.</span>
             </span>
-            <a href={`tel:${store.phone.replace(/[^\d+]/g, '')}`} className="group inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-primary shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-primary-soft hover:shadow-md sm:text-sm">
-              Call now on {store.phone}
+            <a href={whatsappUrl(orderEnquiry)} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-whatsapp-deep shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-whatsapp-soft hover:shadow-md sm:text-sm">
+              <WhatsAppIcon className="h-4 w-4" /> Order now
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>

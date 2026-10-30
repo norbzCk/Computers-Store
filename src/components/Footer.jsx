@@ -28,7 +28,7 @@ export default function Footer() {
       <div className="pointer-events-none absolute -right-20 top-10 h-72 w-72 rounded-full bg-sky/10 blur-3xl" />
       <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-4 border-b border-white/10 py-8 sm:grid-cols-2 sm:py-10 lg:grid-cols-4 lg:gap-6">
-          {[['Free delivery in Dar es Salaam', 'Selected areas only. Confirm on WhatsApp.'], ['Warranty details', 'Shown on product pages where available.'], ['Support on WhatsApp', 'Ask about stock, delivery or payment.'], ['Visit our shop', 'Sinza Makaburini, Dar es Salaam.']].map(([a, b], i) => (
+          {[['Delivery in Dar es Salaam', 'Fees confirmed on WhatsApp before ordering.'], ['Warranty details', 'Shown on product pages where available.'], ['Support on WhatsApp', 'Ask about stock, delivery or payment.'], ['Visit our shop', 'Sinza Makaburini, Dar es Salaam.']].map(([a, b], i) => (
             <div key={a} className={`group rounded-2xl border border-white/10 bg-gradient-to-br ${featureTones[i % featureTones.length]} p-4 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:from-white/15`}>
               <b className="block bg-gradient-to-r from-white to-sky-200 bg-clip-text text-transparent">{a}</b>
               <span className="text-sm text-white/60">{b}</span>

@@ -125,12 +125,12 @@ export default function Product() {
           <div className={`flex flex-wrap gap-3 ${sold ? 'mt-5' : ''}`}>
             <button className="btn-gradient inline-block rounded-full px-8 py-3.5 font-bold" disabled={sold} onClick={() => add(p, qty)}>{sold ? 'Sold out' : 'Add to cart'}</button>
             <a href={productWhatsAppUrl(p)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800 hover:shadow-md">
-              <WhatsAppIcon /> {sold ? 'Ask for similar' : 'Order on WhatsApp'}
+              <WhatsAppIcon /> {sold ? 'Ask for similar' : 'Chat on WhatsApp'}
             </a>
           </div>
           <div className="mt-5 grid grid-cols-3 gap-2 text-center text-[10px] font-bold uppercase tracking-wide sm:text-[11px]">
             <div className="rounded-xl border border-line bg-surface/80 px-2 py-2 text-primary">Warranty</div>
-            <div className="rounded-xl border border-line bg-surface/80 px-2 py-2 text-violet">Free delivery</div>
+            <Link to="/delivery" className="rounded-xl border border-line bg-surface/80 px-2 py-2 text-violet transition hover:border-violet/30 hover:bg-violet/5">Delivery info</Link>
             <div className="rounded-xl border border-line bg-surface/80 px-2 py-2 text-sky">Secure payment</div>
           </div>
         </div>

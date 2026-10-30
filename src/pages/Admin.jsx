@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { cats } from '../data'
 import { useProducts } from '../context/ProductsContext'
+import { useTestimonials } from '../context/TestimonialsContext'
 import Art from '../components/Art'
 import { catName, money, stockLabel } from '../utils'
 import Seo from '../components/Seo'
@@ -29,6 +30,12 @@ const emptyForm = {
   yearReleased: '',
   notes: '',
   image: '',
+}
+
+const emptyTestimonial = {
+  name: '',
+  location: '',
+  quote: '',
 }
 
 const fieldClass = 'w-full rounded-xl border border-line bg-surface p-3 text-ink shadow-sm placeholder:text-text/60 focus:border-primary'
@@ -65,15 +72,24 @@ function compressImage(file) {
 
 export default function Admin() {
   const { products, customProducts, addProduct, removeProduct, storageError } = useProducts()
+  const { customTestimonials, addTestimonial, removeTestimonial, storageError: testimonialStorageError } = useTestimonials()
   const [form, setForm] = useState(emptyForm)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const [imageBusy, setImageBusy] = useState(false)
+  const [testimonialForm, setTestimonialForm] = useState(emptyTestimonial)
+  const [testimonialError, setTestimonialError] = useState('')
+  const [testimonialMessage, setTestimonialMessage] = useState('')
   const fileRef = useRef(null)
 
   const update = (name) => (event) => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
     setForm((current) => ({ ...current, [name]: value }))
+  }
+
+  const updateTestimonial = (name) => (event) => {
+    const value = event.target.value
+    setTestimonialForm((current) => ({ ...current, [name]: value }))
   }
 
   const makeSlug = (name) => {
@@ -82,6 +98,20 @@ export default function Admin() {
     let counter = 2
     while (products.some((p) => p.slug === slug)) slug = `${base}-${counter++}`
     return slug
+  }
+
+  const submitTestimonial = (event) => {
+    event.preventDefault()
+    setTestimonialError('')
+    setTestimonialMessage('')
+    const name = testimonialForm.name.trim()
+    const location = testimonialForm.location.trim()
+    const quote = testimonialForm.quote.trim()
+    if (!name) return setTestimonialError('Customer name is required.')
+    if (!quote) return setTestimonialError('Testimonial text is required.')
+    addTestimonial({ name, location, quote })
+    setTestimonialMessage(`Testimonial from ${name} was added to the home page.`)
+    setTestimonialForm(emptyTestimonial)
   }
 
   const handleImage = async (event) => {
@@ -307,6 +337,59 @@ export default function Admin() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="mt-6 rounded-3xl border border-line bg-surface/70 p-5 shadow-sm sm:p-7" aria-labelledby="testimonial-admin-heading">
+        <div className="mb-4">
+          <h2 id="testimonial-admin-heading" className="text-xl text-gradient sm:text-2xl">Customer testimonials</h2>
+          <p className="text-sm text-text">Add real customer feedback. Testimonials added here are saved in this browser and appear on the home page.</p>
+        </div>
+
+        {testimonialStorageError && <p className="mb-4 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-200">{testimonialStorageError}</p>}
+
+        <form onSubmit={submitTestimonial} className="grid gap-4 rounded-2xl border border-line bg-surface/80 p-4 sm:p-5">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-ink">Customer name</span>
+              <input required value={testimonialForm.name} onChange={updateTestimonial('name')} placeholder="e.g. Amina M." className={fieldClass} />
+            </label>
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-ink">Location (optional)</span>
+              <input value={testimonialForm.location} onChange={updateTestimonial('location')} placeholder="e.g. Sinza, Dar es Salaam" className={fieldClass} />
+            </label>
+          </div>
+          <label>
+            <span className="mb-1.5 block text-sm font-semibold text-ink">Testimonial</span>
+            <textarea required rows="4" value={testimonialForm.quote} onChange={updateTestimonial('quote')} placeholder="Write the customer's feedback here." className={fieldClass} />
+          </label>
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="submit" className="btn-gradient rounded-full px-7 py-3 font-bold">Add testimonial</button>
+            <button type="button" onClick={() => { setTestimonialForm(emptyTestimonial); setTestimonialError(''); setTestimonialMessage('') }} className="rounded-full border border-line bg-surface px-5 py-3 text-sm font-semibold text-ink shadow-sm transition hover:border-primary/30 hover:text-primary">Clear</button>
+          </div>
+          {testimonialError && <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-danger dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">{testimonialError}</p>}
+          {testimonialMessage && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-300">{testimonialMessage} <Link to="/" className="underline">View home page</Link></p>}
+        </form>
+
+        <div className="mt-5">
+          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-ink">Added testimonials ({customTestimonials.length})</h3>
+          {customTestimonials.length === 0 ? (
+            <div className="mt-3 rounded-2xl border border-dashed border-primary/30 bg-primary-soft/40 p-6 text-center text-sm text-text">
+              No testimonials added yet. Use the form above to add the first one.
+            </div>
+          ) : (
+            <div className="mt-3 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface/80">
+              {customTestimonials.map((testimonial) => (
+                <div key={testimonial.id} className="flex flex-wrap items-start gap-3 p-3 sm:flex-nowrap">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-ink">{testimonial.name}{testimonial.location ? ` · ${testimonial.location}` : ''}</p>
+                    <p className="mt-1 text-sm text-text">“{testimonial.quote}”</p>
+                  </div>
+                  <button type="button" onClick={() => removeTestimonial(testimonial.id)} className="text-xs font-bold text-danger hover:underline">Remove</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </div>
   )

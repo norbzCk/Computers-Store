@@ -5,6 +5,7 @@ import Card from '../components/Card'
 import WhatsAppIcon from '../components/WhatsAppIcon'
 import Seo from '../components/Seo'
 import { useProducts } from '../context/ProductsContext'
+import { useTestimonials } from '../context/TestimonialsContext'
 import { isInStock, isSold, money, whatsappUrl } from '../utils'
 
 const tileTones = [
@@ -25,10 +26,10 @@ function TrustIcon({ type }) {
 
 export default function HomePage() {
   const { products } = useProducts()
+  const { testimonials } = useTestimonials()
   const featured = products.filter((p) => p.featured && !isSold(p)).slice(0, 2)
   const fresh = products.filter((p) => isInStock(p) && !p.featured).slice(0, 8)
   const instaProducts = products.filter(isInStock).slice(0, 4)
-  const testimonials = store.testimonials || []
   const seoJsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -61,7 +62,7 @@ export default function HomePage() {
   const trustItems = [
     { type: 'warranty', title: 'Warranty details', text: 'Shown on each product page where available.' },
     { type: 'delivery', title: 'Delivery in Dar es Salaam', text: store.deliveryInfo.summary },
-    { type: 'whatsapp', title: 'Order on WhatsApp', text: 'Ask about stock, price and delivery first.' },
+    { type: 'whatsapp', title: 'Chat on WhatsApp', text: 'Ask about stock, price and delivery first.' },
     { type: 'shop', title: 'Visit our shop', text: store.address },
   ]
   return (
@@ -148,7 +149,7 @@ export default function HomePage() {
         <div className="mb-5 flex items-end justify-between gap-4 sm:mb-6">
           <div>
             <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.18em] text-violet">Customer feedback</p>
-            <h2 id="testimonials-heading" className="text-xl sm:text-2xl lg:text-3xl text-gradient">What customers say</h2>
+            <h2 id="testimonials-heading" className="text-xl sm:text-2xl lg:text-3xl text-gradient">Testimonials</h2>
           </div>
         </div>
         {testimonials.length > 0 ? (
@@ -162,9 +163,8 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="panel-gradient rounded-2xl border border-line p-6 text-center shadow-sm sm:p-8">
-            <p className="font-bold text-ink">We only publish feedback from real customers.</p>
-            <p className="mx-auto mt-1 max-w-xl text-sm text-text">Verified customer reviews will appear here once they are available. In the meantime, ask us anything about a product on WhatsApp.</p>
-            <a href={whatsappUrl(`Hello ${store.name}, I'd like to ask about a product.`)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800"><WhatsAppIcon className="h-4 w-4" /> Ask on WhatsApp</a>
+            <p className="font-bold text-ink">Customer testimonials will appear here.</p>
+            <p className="mx-auto mt-1 max-w-xl text-sm text-text">We only publish feedback from real customers. New testimonials will appear here soon.</p>
           </div>
         )}
       </section>

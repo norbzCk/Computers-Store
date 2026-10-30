@@ -18,7 +18,7 @@ export default function Delivery() {
             Delivery
           </span>
           <h1 className="text-2xl sm:text-3xl md:text-4xl text-gradient mb-3">Delivery in Dar es Salaam</h1>
-          <p className="max-w-2xl text-text sm:text-lg">{store.deliveryInfo.summary} {store.deliveryInfo.freeDeliveryNote}</p>
+          <p className="max-w-2xl text-text sm:text-lg">{store.deliveryInfo.summary} {store.deliveryInfo.deliveryNote}</p>
           <div className="mt-6 flex flex-wrap gap-1.5 sm:gap-2.5">
             <a href={whatsappUrl(enquiry)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800 sm:px-6 sm:py-3.5 sm:text-base"><WhatsAppIcon className="h-5 w-5" /> Confirm on WhatsApp</a>
             <a href={store.mapLink} target="_blank" rel="noopener noreferrer" className="rounded-full border border-line bg-surface px-5 py-3 text-sm font-bold text-primary shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary-soft sm:px-6 sm:py-3.5 sm:text-base">View location</a>

@@ -54,6 +54,10 @@
   --color-surface: #ffffff;
   --color-line: #e4e8ea;
   --color-green: #0a8a0a;
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #128c7e;
+  --color-whatsapp-deep: #075e54;
+  --color-whatsapp-soft: #dcf8c6;
   --color-top: #5b5b5b;
   --font-sans: Barlow, system-ui, sans-serif;
 }
@@ -146,7 +150,7 @@ input[type="checkbox"] {
 }
 
 .delivery-bar {
-  background-image: linear-gradient(110deg, #1f4fe0 0%, #4c1d95 22%, #831843 45%, #9a3412 68%, #1f4fe0 100%);
+  background-image: linear-gradient(110deg, var(--color-whatsapp-deep) 0%, var(--color-whatsapp-dark) 24%, var(--color-whatsapp) 50%, var(--color-whatsapp-dark) 76%, var(--color-whatsapp-deep) 100%);
   background-size: 260% 100%;
   background-position: 0% 50%;
   animation: delivery-pan 9s ease-in-out infinite;

@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import { ProductsProvider } from './context/ProductsContext'
+import { TestimonialsProvider } from './context/TestimonialsContext'
 import { ThemeProvider } from './context/ThemeContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -21,26 +22,28 @@ export default function App() {
   return (
     <ThemeProvider>
       <ProductsProvider>
-        <CartProvider>
-          <Header />
-          <Suspense fallback={<div className="mx-auto max-w-[1420px] px-4 py-16 text-center text-text">Loading…</div>}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/collections/:slug" element={<Collection />} />
-              <Route path="/products/:slug" element={<Product />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/delivery" element={<Delivery />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="*" element={<Collection />} />
-            </Routes>
-          </Suspense>
-          <Footer />
-          <FloatingWhatsApp />
-          <Drawer />
-        </CartProvider>
+        <TestimonialsProvider>
+          <CartProvider>
+            <Header />
+            <Suspense fallback={<div className="mx-auto max-w-[1420px] px-4 py-16 text-center text-text">Loading…</div>}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/collections/:slug" element={<Collection />} />
+                <Route path="/products/:slug" element={<Product />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/delivery" element={<Delivery />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="*" element={<Collection />} />
+              </Routes>
+            </Suspense>
+            <Footer />
+            <FloatingWhatsApp />
+            <Drawer />
+          </CartProvider>
+        </TestimonialsProvider>
       </ProductsProvider>
     </ThemeProvider>
   )
